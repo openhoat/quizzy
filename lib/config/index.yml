@@ -3,8 +3,11 @@ server:
   hostname: ${env.QUIZZY_SERVER_HOST || env.SERVER_HOST || '127.0.0.1'}
   socket: ${env.QUIZZY_SERVER_SOCKET || env.SERVER_SOCKET}
 store:
-  type: redis
-  rootKey: quizzy
+  type: ${env.NODE_ENV === 'test' && 'memory' || env.QUIZZY_STORE_TYPE || 'memory'}
+  config:
+    redis:
+      db: ${env.NODE_ENV === 'test' && 1 || 0}
+    rootKey: quizzy
 redis:
   host: ${env.QUIZZY_REDIS_HOST || env.REDIS_HOST || 'localhost'}
   port: ${env.QUIZZY_REDIS_PORT || env.REDIS_PORT || 6379}
