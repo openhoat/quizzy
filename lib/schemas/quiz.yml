@@ -1,0 +1,22 @@
+id: /Quiz
+title: 'Quiz schema'
+type: object
+properties:
+  id:
+    type: string
+  created:
+    $ref: ./DateTime
+  title:
+    type: string
+  description:
+    type: string
+  questions:
+    $ref: ./Questions
+  results: ./Results
+required:
+  - id
+  - created
+  - title
+  - questions
+  - results
+additionalProperties: false

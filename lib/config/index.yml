@@ -1,0 +1,33 @@
+server:
+  port: ${env.QUIZZY_SERVER_PORT || env.SERVER_PORT || 3000}
+  hostname: ${env.QUIZZY_SERVER_HOST || env.SERVER_HOST || '127.0.0.1'}
+  socket: ${env.QUIZZY_SERVER_SOCKET || env.SERVER_SOCKET}
+store:
+  type: redis
+  rootKey: quizzy
+redis:
+  host: ${env.QUIZZY_REDIS_HOST || env.REDIS_HOST || 'localhost'}
+  port: ${env.QUIZZY_REDIS_PORT || env.REDIS_PORT || 6379}
+  auth_pass: ${env.QUIZZY_REDIS_PASSWORD || env.REDIS_PASSWORD || ''}
+  no_ready_check: true
+auth:
+  google:
+    clientId: ${env.QUIZZY_GOOGLE_CONSUMER_KEY || env.GOOGLE_CONSUMER_KEY || 'googleClientId'}
+    clientSecret: ${env.QUIZZY_GOOGLE_CONSUMER_SECRET || env.GOOGLE_CONSUMER_SECRET || 'googleClientSecret'}
+  facebook:
+    clientId: ${env.QUIZZY_FACEBOOK_CLIENT_ID || env.FACEBOOK_CLIENT_ID || 'facebookClientId'}
+    clientSecret: ${env.QUIZZY_FACEBOOK_CLIENT_SECRET || env.FACEBOOK_CLIENT_SECRET || 'facebookClientSecret'}
+  twitter:
+    consumerKey: ${env.QUIZZY_TWITTER_CONSUMER_KEY || env.TWITTER_CONSUMER_KEY || 'twitterConsumerKey'}
+    consumerSecret: ${env.QUIZZY_TWITTER_CONSUMER_SECRET || env.TWITTER_CONSUMER_SECRET || 'twitterConsumerSecret'}
+admin: ${env.NODE_ENV === 'test' && ['john.doe@gmail.com'] || env.QUIZZY_ADMINS || ['openhoat@gmail.com']}
+express:
+  sessionSecret: ${env.QUIZZY_EXPRESS_SESSION_SECRET || env.EXPRESS_SESSION_SECRET || 'lrC8BabSIx3PeGV-J45J9_m5'}
+jwt:
+  secret: ${env.QUIZZY_JWT_SECRET || env.JWT_SECRET || '7bJbNCGuRjV2R8vlGTrUwfRZ'}
+cookiesMaxAge: ${365 * 24 * 60 * 60 * 1000}
+hooks:
+  quizSession:
+    url: ${env.NODE_ENV !== 'test' && env.QUIZZY_ELASTICSEARCH_URL || env.ELASTICSEARCH_URL}
+    username: ${env.QUIZZY_ELASTICSEARCH_USERNAME || env.ELASTICSEARCH_USERNAME}
+    password: ${env.QUIZZY_ELASTICSEARCH_PASSWORD || env.ELASTICSEARCH_PASSWORD}

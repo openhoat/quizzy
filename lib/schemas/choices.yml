@@ -1,0 +1,7 @@
+id: /Choices
+title: 'Quiz question choices schema'
+type: array
+minItems: 2
+items:
+  $ref: ./Choice
+additionalProperties: false

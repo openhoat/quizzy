@@ -1,0 +1,14 @@
+id: /Question
+title: 'Quiz question schema'
+type: object
+properties:
+  title:
+    type: string
+  info:
+    type: string
+  choices:
+    $ref: ./Choices
+required:
+  - title
+  - choices
+additionalProperties: false

@@ -1,0 +1,3 @@
+quizzyElt: '#quizzy'
+dataQuizIdAttrName: data-quiz-id
+showCorrectMessage: true

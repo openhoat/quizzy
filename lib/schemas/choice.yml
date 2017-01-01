@@ -1,0 +1,14 @@
+id: /Choice
+title: 'Quiz question choice schema'
+type: object
+properties:
+  value:
+    type:
+      - string
+      - number
+      - boolean
+  score:
+    type: number
+required:
+  - value
+additionalProperties: false

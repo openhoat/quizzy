@@ -1,0 +1,15 @@
+id: /Answer
+title: 'Quiz session answer schema'
+type: object
+properties:
+  question:
+    $ref: ./Question
+  choice:
+    type: String
+  score:
+    type: number
+required:
+  - question
+  - choice
+  - score
+additionalProperties: false

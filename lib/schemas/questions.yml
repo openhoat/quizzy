@@ -1,0 +1,7 @@
+id: /Questions
+title: 'Quiz questions schema'
+type: array
+minItems: 1
+items:
+  $ref: ./Question
+additionalProperties: false

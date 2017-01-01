@@ -1,0 +1,7 @@
+id: /Quizzes
+title: 'Quizzes schema'
+type: array
+minItems: 1
+items:
+  $ref: ./Quiz
+additionalProperties: false

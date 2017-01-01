@@ -1,0 +1,30 @@
+id: /Session
+title: 'Quiz session schema'
+type: object
+properties:
+  id:
+    type: string
+  created:
+    $ref: ./DateTime
+  user:
+    $ref: ./User
+  quizId:
+    type: string
+  answers:
+    $ref: ./Answers
+  score:
+    type: integer
+  max:
+    type: integer
+  result:
+    type: string
+required:
+  - id
+  - created
+  - user
+  - quizId
+  - answers
+  - score
+  - max
+  - result
+additionalProperties: false

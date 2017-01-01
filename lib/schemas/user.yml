@@ -1,0 +1,18 @@
+id: /User
+title: 'Quiz user schema'
+type: object
+properties:
+  provider:
+    enum:
+      - google
+      - facebook
+      - twitter
+  name:
+    type: string
+  email:
+    $ref: ./Email
+required:
+  - provider
+  - name
+  - email
+additionalProperties: false
