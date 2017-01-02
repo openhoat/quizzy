@@ -4,7 +4,9 @@ import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-social/bootstrap-social.css'
 import 'font-awesome/css/font-awesome.css'
+import hljs from 'highlightjs/highlight.pack'
 import $ from 'jquery'
+import 'highlightjs/styles/default.css'
 
 // Vue deps
 import Vue from 'vue'
@@ -22,6 +24,13 @@ Object.keys(locales).forEach(lang => {
 Vue.directive('focus', {
   inserted: el => {
     el.focus()
+  }
+})
+Vue.directive('highlightjs', {
+  inserted: el => {
+    $(el).find('pre > code').each(function() {
+      hljs.highlightBlock(this)
+    })
   }
 })
 

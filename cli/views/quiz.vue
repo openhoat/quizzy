@@ -9,7 +9,7 @@
         <h3>Question {{ questionIndex }}/{{ quiz && quiz.questions.length }}</h3>
         <br>
         <h4 v-html="quiz.questions[questionIndex - 1].title"></h4>
-        <p v-if="quiz.questions[questionIndex - 1].info" v-html="quiz.questions[questionIndex - 1].info">
+        <p v-if="quiz.questions[questionIndex - 1].info" v-html="quiz.questions[questionIndex - 1].info" v-highlightjs>
         </p>
         <div class="list-group">
           <button type="button" class="list-group-item list-group-item-action quiz-choice"

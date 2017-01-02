@@ -32,6 +32,7 @@
     "express-session": "^1.14.2",
     "fb": "^1.1.1",
     "font-awesome": "^4.7.0",
+    "highlightjs": "^9.8.0",
     "hw-logger": "^1.1.15",
     "jquery": "^3.1.1",
     "js-cookie": "^2.1.3",
