@@ -9,7 +9,7 @@
         <h3>Question {{ questionIndex }}/{{ quiz && quiz.questions.length }}</h3>
         <br>
         <h4 v-html="quiz.questions[questionIndex - 1].title"></h4>
-        <p v-if="quiz.questions[questionIndex - 1].info" v-html="quiz.questions[questionIndex - 1].info" v-highlightjs>
+        <p v-if="quiz.questions[questionIndex - 1].info" v-html="quiz.questions[questionIndex - 1].info">
         </p>
         <div class="list-group">
           <button type="button" class="list-group-item list-group-item-action quiz-choice"
@@ -38,6 +38,7 @@
 
 <script type="text/ecmascript-6">
   import $ from 'jquery'
+  import hljs from 'highlightjs/highlight.pack'
   import helper from '../helper'
   import store from '../store'
   import config from 'json!yaml!../config.yml'
@@ -111,6 +112,11 @@
             store.commit('setQuiz', quiz)
             this.next()
           })
+    },
+    updated() {
+      $(this.$el).find('pre > code').each(function() {
+        hljs.highlightBlock(this)
+      })
     },
     beforeDestroy() {
       window.removeEventListener('keypress', this.keyHandler)
