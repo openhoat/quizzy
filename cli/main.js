@@ -6,6 +6,7 @@ import 'bootstrap-social/bootstrap-social.css'
 import 'font-awesome/css/font-awesome.css'
 import $ from 'jquery'
 import 'highlightjs/styles/default.css'
+import Cookies from 'js-cookie'
 
 // Vue deps
 import Vue from 'vue'
@@ -26,13 +27,13 @@ Vue.directive('focus', {
   }
 })
 /*
-Vue.directive('highlightjs', {
-  inserted: el => {
-    $(el).find('pre > code').each(function() {
-      hljs.highlightBlock(this)
-    })
-  }
-})*/
+ Vue.directive('highlightjs', {
+ inserted: el => {
+ $(el).find('pre > code').each(function() {
+ hljs.highlightBlock(this)
+ })
+ }
+ })*/
 
 // App deps
 import './css/style.css'
@@ -71,6 +72,18 @@ $(() => {
       ]
     })
   })()
+  router.beforeEach((to, from, next) => {
+    const initialPath = Cookies.get('initialPath')
+    if (initialPath && store.state.user) {
+      Cookies.remove('initialPath')
+      return next(initialPath)
+    }
+    if (!store.state.user && to.path !== '/') {
+      Cookies.set('initialPath', to.path)
+      return next('/')
+    }
+    next()
+  })
 
   const quizId = $(quizzyElt).attr(config.dataQuizIdAttrName)
   if (quizId) {

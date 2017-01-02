@@ -101,7 +101,7 @@
     created() {
       window.addEventListener('keypress', this.keyHandler, false)
       if (!store.state.user) {
-        return this.$router.replace('/')
+        return
       }
       const quizId = this.$route.params.id
       helper.fetchQuiz(quizId)
