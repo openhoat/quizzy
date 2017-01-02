@@ -21,6 +21,7 @@
                   v-on:click="choose(index + 2)"></button>
         </div>
       </div>
+      <loading v-else></loading>
       <div v-if="typeof questionResult === 'boolean'" class="btn-group btn-group-justified">
         <div class="btn-group">
           <button v-on:click="next" :title="$t('gotoNextQuestion')"
