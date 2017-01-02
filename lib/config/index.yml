@@ -36,7 +36,7 @@ hooks:
     password: ${env.QUIZZY_ELASTICSEARCH_PASSWORD || env.ELASTICSEARCH_PASSWORD}
   quizSessionEmailNotification:
     from: ${env.QUIZZY_EMAIL_NOTIFICATION_FROM}
-    to: openhoat@laposte.io #${env.QUIZZY_EMAIL_NOTIFICATION_TO}
+    to: ${env.QUIZZY_EMAIL_NOTIFICATION_TO}
     transport:
       host: ${env.QUIZZY_EMAIL_NOTIFICATION_SMTP_HOST}
       port: ${env.QUIZZY_EMAIL_NOTIFICATION_SMTP_PORT}
