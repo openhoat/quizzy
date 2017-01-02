@@ -42,6 +42,7 @@
     "lodash.template": "^4.4.0",
     "method-override": "^2.3.7",
     "moment": "^2.17.1",
+    "nodemailer": "^2.7.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
@@ -93,8 +94,5 @@
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.14.0",
     "yaml-loader": "^0.4.0"
-  },
-  "optionalDependencies": {
-    "nodemailer": "^2.7.0"
   }
 }
