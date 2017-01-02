@@ -3,14 +3,14 @@ const webpack = require('webpack')
 const pkg = require('./package')
 
 const isProd = process.env.NODE_ENV === 'production'
-const bundleName = `${pkg.name}-${pkg.version}-bundle${isProd ? '.min' : ''}.js`
+const bundleName = `${pkg.name}-bundle.js`
 
 module.exports = ({
   entry: ['./cli/main.js'],
   output: {
-    path: path.resolve(__dirname, './assets/app'),
+    path: path.resolve(__dirname, './dist/app'),
     filename: bundleName,
-    publicPath: '/assets/app/'
+    publicPath: '/assets/app'
   },
   module: {
     loaders: [
@@ -60,7 +60,7 @@ module.exports = ({
   ],
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.js',
+      'vue$': `vue/dist/vue${isProd ? '.min' : ''}.js`,
     }
   },
   init() {

@@ -1,30 +1,35 @@
 <template>
   <div>
     <account></account>
-    <div v-if="quiz && session">
-      <h3>{{ $t('yourQuizResult') }} : <strong>{{ quiz.title }}</strong></h3>
-      <h4>
-        <dl class="list-group dl-horizontal">
-          <dt>{{ $t('score') }} :</dt>
-          <dd>
-            <strong>{{ session.score }}</strong> / {{ session.max }}
-          </dd>
-          <dt>{{ $t('evaluation') }} :</dt>
-          <dd v-html="session.result"></dd>
-        </dl>
-      </h4>
+    <div>
+      <p v-html="$t('resultMessage', {quiz: quiz.title})"></p>
+      <div v-if="showResult && session">
+        <h3>{{ $t('yourQuizResult') }} : <strong>{{ quiz.title }}</strong></h3>
+        <h4>
+          <dl class="list-group dl-horizontal">
+            <dt>{{ $t('score') }} :</dt>
+            <dd>
+              <strong>{{ session.score }}</strong> / {{ session.max }}
+            </dd>
+            <dt>{{ $t('evaluation') }} :</dt>
+            <dd v-html="session.result"></dd>
+          </dl>
+        </h4>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import store from '../store'
+  import config from 'json!yaml!../config.yml'
   export default {
     data() {
       return {session: null}
     },
     computed: {
       quiz: () => store.state.quiz,
+      showResult: () => config.showResult,
     },
     created() {
       if (!store.state.user || !store.state.sessions || !store.state.quiz) {

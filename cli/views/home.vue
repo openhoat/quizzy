@@ -59,7 +59,6 @@
       }
       helper.fetchQuizSessions()
           .then(sessions => {
-            console.log('sessions :', sessions)
             store.commit('setSessions', sessions)
             return helper.fetchQuizzes()
                 .then(quizzes => {

@@ -1,7 +1,6 @@
 .idea
 *.log
 naught.*
-assets/app/*
 dist/
 node_modules/
 tmp/
