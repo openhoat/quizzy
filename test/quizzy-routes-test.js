@@ -93,7 +93,8 @@ describe('quizzy routes', function() {
   }
   const jwtToken = helper.createJwt(user)
   const authorization = `JWT ${jwtToken}`
-  const store = Store.create(config.get('store.type'), config.get('store.config'))
+  const persistenceType = config.get('persistence.type', 'memory')
+  const store = Store.create(persistenceType, config.get('persistence'))
 
   describe(`${store.name} store`, () => {
 
