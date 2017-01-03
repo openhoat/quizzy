@@ -26,5 +26,4 @@ required:
   - answers
   - score
   - max
-  - result
 additionalProperties: false

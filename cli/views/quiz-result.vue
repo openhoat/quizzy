@@ -11,8 +11,8 @@
             <dd>
               <strong>{{ session.score }}</strong> / {{ session.max }}
             </dd>
-            <dt>{{ $t('evaluation') }} :</dt>
-            <dd v-html="session.result"></dd>
+            <dt v-if="session.result">{{ $t('evaluation') }} :</dt>
+            <dd v-if="session.result" v-html="session.result"></dd>
           </dl>
         </h4>
       </div>
