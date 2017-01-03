@@ -91,14 +91,14 @@ describe('quizzy routes', function() {
     name: 'John Doe',
     email: 'john.doe@gmail.com'
   }
-  const jwtToken = helper.createJwt(user)
+  const jwtToken = helper.createJwt(config, user)
   const authorization = `JWT ${jwtToken}`
   const persistenceType = config.get('persistence.type', 'memory')
   const store = Store.create(persistenceType, config.get('persistence'))
 
   describe(`${store.name} store`, () => {
 
-    const quizzy = require('../lib/quizzy')(store)
+    const quizzy = require('../lib/quizzy')(config, store)
     const testServer = TestServer(quizzy)
     const request = testServer.request
 

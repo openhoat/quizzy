@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const bundleName = `${pkg.name}-bundle.js`
 
 module.exports = ({
-  entry: ['./cli/main.js'],
+  entry: [path.resolve(__dirname, './cli/main.js')],
   output: {
     path: path.resolve(__dirname, './dist/app'),
     filename: bundleName,
