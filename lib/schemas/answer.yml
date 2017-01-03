@@ -5,7 +5,7 @@ properties:
   question:
     $ref: ./Question
   choice:
-    type: String
+    type: number
   score:
     type: number
 required:
