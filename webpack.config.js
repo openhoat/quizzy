@@ -10,7 +10,7 @@ module.exports = ({
   output: {
     path: path.resolve(__dirname, './dist/app'),
     filename: bundleName,
-    publicPath: '/assets/app'
+    publicPath: '/assets/app/'
   },
   module: {
     loaders: [
