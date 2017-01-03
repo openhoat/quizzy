@@ -2,6 +2,6 @@ id: /Results
 title: 'Quiz results'
 type: object
 patternProperties:
-  '^[0-9]+$':
+  '^[-0-9]+$':
     type: string
 additionalProperties: false
