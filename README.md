@@ -34,11 +34,11 @@ Static assets (css, images, ...)
 
 This directory contains all the Single Page Application code powered by Vuejs.
 
-- [config.yml](blob/master/cli/config.yml) : configuration settings of the single page app
-- [helper.js](blob/master/cli/helper.js) : util functions
-- [locales.yml](blob/master/cli/locales.yml) : localized texts ([vue-i18n](https://www.npmjs.com/package/vue-i18n))
-- [main.js](blob/master/cli/main.js) : entry point of the single page app
-- [store.js](blob/master/cli/store.js) : shared state of the single page app ([vuex](https://www.npmjs.com/package/vuex))
+- [config.yml](cli/config.yml) : configuration settings of the single page app
+- [helper.js](cli/helper.js) : util functions
+- [locales.yml](cli/locales.yml) : localized texts ([vue-i18n](https://www.npmjs.com/package/vue-i18n))
+- [main.js](cli/main.js) : entry point of the single page app
+- [store.js](cli/store.js) : shared state of the single page app ([vuex](https://www.npmjs.com/package/vuex))
 
 ##### components
 
