@@ -43,6 +43,12 @@ $ npm start
 
 Note : if NODE_ENV is set to development, the server is started with nodemon and webpack middleware is used to hot reload the cli.
 
+### Features :
+
+- Play a quiz session with the SPA
+- Sign in with your Google, Twitter, or Facebook account
+- Create and manage quizzes and sessions via APIs
+
 ### Anatomy of the project
 
 Help about the project structure
@@ -84,6 +90,40 @@ Vuejs views
 #### lib
 
 This directory contains all the server code powered by Nodejs.
+
+##### config
+
+##### routes
+
+Contains all the routes exposed by the express app, including APIs and OAuth2 endpoints
+
+##### schemas
+
+Contains all the JSON schemas of entities, in YAML format.
+
+##### services
+
+- store : Used to store the data model (quizzes and sessions) into memory or redis (feel free to code another implementation)
+    - index.js : Generic store interface
+    - memory-store.js : Simple store implementation in-memory
+    - redis-store.js : Store implementation for a Redis database server
+- body-parser.js : Extended body parser compatible with JSON or YAML payload
+- errors.js : Custom error classes used in the project
+- json-validator.js : JSON schema validator used by the store to validate entities before persist them
+- redis-cli.js : A simple Redis client
+- view-renderer.js : HTML view renderer used by the express app
+
+##### config.js
+
+Configuration loader
+
+##### helper.js
+
+Util functions
+
+##### quizzy.js
+
+Main module of the app. It exports an express app if required by another module else it runs the server.
 
 #### test
 
