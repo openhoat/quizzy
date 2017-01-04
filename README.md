@@ -48,6 +48,7 @@ Note : if NODE_ENV is set to development, the server is started with nodemon and
 - Play a quiz session with the SPA
 - Sign in with your Google, Twitter, or Facebook account
 - Create and manage quizzes and sessions via APIs
+- i18n compliant
 
 ### Anatomy of the project
 
@@ -60,6 +61,8 @@ Static assets (css, images, ...)
 #### cli
 
 This directory contains all the Single Page Application code powered by Vuejs.
+
+The client part is based on VueJS with vue-i18n, vue-router, and vuex (it can also be used as a boilerplate project for VueJS)
 
 - [config.yml](cli/config.yml) : configuration settings of the single page app
 - [helper.js](cli/helper.js) : util functions
