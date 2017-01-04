@@ -1,6 +1,6 @@
 [![NPM version](https://badge.fury.io/js/quizzy.svg)](http://badge.fury.io/js/quizzy)
 [![Build Status](https://travis-ci.org/openhoat/quizzy.png?branch=master)](https://travis-ci.org/openhoat/quizzy)
-[![Coverage Status](https://coveralls.io/repos/openhoat/quizzy/badge.svg)](https://coveralls.io/r/openhoat/quizzy)
+[![Coverage Status](https://coveralls.io/repos/github/openhoat/quizzy/badge.svg?branch=master)](https://coveralls.io/github/openhoat/quizzy?branch=master)
 [![npm](https://img.shields.io/npm/l/express.svg?style=flat-square)]()
 
 ## Quizzy
