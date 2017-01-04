@@ -11,6 +11,7 @@ persistence:
       db: ${env.NODE_ENV === 'test' && 1 || 0}
       auth_pass: ${env.QUIZZY_REDIS_PASSWORD || env.REDIS_PASSWORD || ''}
       no_ready_check: true
+      prefix: 'quizzy:'
     rootKey: quizzy
 auth:
   google:
@@ -22,7 +23,7 @@ auth:
   twitter:
     consumerKey: ${env.QUIZZY_TWITTER_CONSUMER_KEY || env.TWITTER_CONSUMER_KEY || 'twitterConsumerKey'}
     consumerSecret: ${env.QUIZZY_TWITTER_CONSUMER_SECRET || env.TWITTER_CONSUMER_SECRET || 'twitterConsumerSecret'}
-admin: ${env.NODE_ENV === 'test' && ['john.doe@gmail.com'] || env.QUIZZY_ADMINS || ['openhoat@gmail.com']}
+admin: ${env.QUIZZY_ADMINS || 'admin@quizzy.io'}
 express:
   session:
     secret: ${env.QUIZZY_EXPRESS_SESSION_SECRET || env.EXPRESS_SESSION_SECRET || 'lrC8BabSIx3PeGV-J45J9_m5'}
@@ -31,12 +32,12 @@ jwt:
 cookiesMaxAge: ${365 * 24 * 60 * 60 * 1000}
 hooks:
   quizSession:
-    url: ${env.NODE_ENV !== 'test' && env.QUIZZY_ELASTICSEARCH_URL || env.ELASTICSEARCH_URL}
+    url: ${env.NODE_ENV !== 'test' && (env.QUIZZY_ELASTICSEARCH_URL || env.ELASTICSEARCH_URL) || ''}
     username: ${env.QUIZZY_ELASTICSEARCH_USERNAME || env.ELASTICSEARCH_USERNAME}
     password: ${env.QUIZZY_ELASTICSEARCH_PASSWORD || env.ELASTICSEARCH_PASSWORD}
   quizSessionEmailNotification:
     from: ${env.QUIZZY_EMAIL_NOTIFICATION_FROM}
-    to: ${env.QUIZZY_EMAIL_NOTIFICATION_TO}
+    to: ${env.NODE_ENV !== 'test' && env.QUIZZY_EMAIL_NOTIFICATION_TO || ''}
     transport:
       host: ${env.QUIZZY_EMAIL_NOTIFICATION_SMTP_HOST}
       port: ${env.QUIZZY_EMAIL_NOTIFICATION_SMTP_PORT}

@@ -1,3 +1,8 @@
+[![NPM version](https://badge.fury.io/js/quizzy.svg)](http://badge.fury.io/js/quizzy)
+[![Build Status](https://travis-ci.org/openhoat/quizzy.png?branch=master)](https://travis-ci.org/openhoat/quizzy)
+[![Coverage Status](https://coveralls.io/repos/openhoat/quizzy/badge.svg)](https://coveralls.io/r/openhoat/quizzy)
+[![npm](https://img.shields.io/npm/l/express.svg?style=flat-square)]()
+
 ## Quizzy
 
 A simple quizzes API server and [Single Page Application](https://en.wikipedia.org/wiki/Single-page_application) powered by [Nodejs](https://nodejs.org/en/), [Expressjs](http://expressjs.com/), [Vuejs](https://vuejs.org/) and [Redis](https://redis.io/).
