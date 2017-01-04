@@ -7,7 +7,7 @@
     "clean": "rimraf dist/* **/.bundle*.js",
     "lint": "eslint .",
     "test": "mocha",
-    "cover": "istanbul cover _mocha && xdg-open dist/coverage/lcov-report/index.html",
+    "cover": "istanbul cover _mocha",
     "coveralls": "npm run cover -- -- -R spec && cat dist/coverage/lcov.info | coveralls && rimraf dist/coverage",
     "build": "webpack",
     "start": "[ ${NODE_ENV} = 'development' ] && nodemon -e js,html lib/quizzy.js || node lib/quizzy.js"
