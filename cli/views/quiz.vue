@@ -5,30 +5,32 @@
       <h2>{{ $t('quiz') }} : {{ quiz.title }}</h2>
       <p v-if="quiz.description" v-html="quiz.description"></p>
       <div v-if="alert" class="alert alert-danger" role="alert">{{ alert }}</div>
-      <div v-if="questionIndex">
-        <h3>Question {{ questionIndex }}/{{ quiz && quiz.questions.length }}</h3>
-        <br>
-        <h4 v-html="quiz.questions[questionIndex - 1].title"></h4>
-        <p v-if="quiz.questions[questionIndex - 1].info" v-html="quiz.questions[questionIndex - 1].info">
-        </p>
-        <div class="list-group">
-          <button type="button" class="list-group-item list-group-item-action quiz-choice"
-                  v-html="quiz.questions[questionIndex - 1].choices[0].value" v-focus
-                  v-on:click="choose(1)"></button>
-          <button type="button" class="list-group-item list-group-item-action quiz-choice"
-                  v-for="(choice, index) in quiz.questions[questionIndex - 1].choices.slice(1)"
-                  v-html="choice.value"
-                  v-on:click="choose(index + 2)"></button>
+      <div class="quizQuestion">
+        <div v-if="questionIndex">
+          <h3>Question <strong>{{ questionIndex }}</strong> / {{ quiz && quiz.questions.length }}</h3>
+          <br>
+          <h4 v-html="quiz.questions[questionIndex - 1].title"></h4>
+          <p v-if="quiz.questions[questionIndex - 1].info" v-html="quiz.questions[questionIndex - 1].info">
+          </p>
+          <div class="list-group" :key="questionIndex">
+            <button type="button" class="list-group-item list-group-item-action quiz-choice"
+                    v-html="quiz.questions[questionIndex - 1].choices[0].value" v-focus
+                    v-on:click="choose(1)"></button>
+            <button type="button" class="list-group-item list-group-item-action quiz-choice"
+                    v-for="(choice, index) in quiz.questions[questionIndex - 1].choices.slice(1)"
+                    v-html="choice.value"
+                    v-on:click="choose(index + 2)"></button>
+          </div>
         </div>
-      </div>
-      <loading v-else></loading>
-      <div v-if="typeof questionResult === 'boolean'" class="btn-group btn-group-justified">
-        <div class="btn-group">
-          <button v-on:click="next" :title="$t('gotoNextQuestion')"
-                  v-on:keyup.enter="next"
-                  :class="`pull-left btn btn-${questionResult ? 'success' : 'danger'} btn-lg`">
-            {{ questionResult ? $t('correct') : $t('notCorrect') }} : {{ $t('gotoNextQuestion') }}
-          </button>
+        <loading v-else></loading>
+        <div v-if="typeof questionResult === 'boolean'" class="btn-group btn-group-justified">
+          <div class="btn-group">
+            <button v-on:click="next" :title="$t('gotoNextQuestion')"
+                    v-on:keyup.enter="next"
+                    :class="`pull-left btn btn-${questionResult ? 'success' : 'danger'} btn-lg`">
+              {{ questionResult ? $t('correct') : $t('notCorrect') }} : {{ $t('gotoNextQuestion') }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
