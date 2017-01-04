@@ -7,9 +7,25 @@
 
 A simple quizzes API server and [Single Page Application](https://en.wikipedia.org/wiki/Single-page_application) powered by [Nodejs](https://nodejs.org/en/), [Expressjs](http://expressjs.com/), [Vuejs](https://vuejs.org/) and [Redis](https://redis.io/).
 
+### Prerequisite
+
+#### [Install NodeJS](https://nodejs.org/en/download/package-manager/)
+
+#### Install dependencies :
+
+```
+$ npm install
+```
+
+or
+
+```
+$ yarn
+```
+
 ### Usage
 
-Build the cli bundle :
+#### Build the cli bundle :
 
 ```
 $ npm run build
@@ -19,7 +35,7 @@ Note :
 - The bundle file is created into dist/app directory
 - if NODE_ENV is set to production, the bundle is uglyfied/minified without sourcemaps.
 
-Start the server :
+#### Start the server :
 
 ```
 $ npm start
@@ -27,7 +43,7 @@ $ npm start
 
 Note : if NODE_ENV is set to development, the server is started with nodemon and webpack middleware is used to hot reload the cli.
 
-### Anatomy
+### Anatomy of the project
 
 Help about the project structure
  
@@ -77,5 +93,6 @@ Unit tests in the form of mocha specs
 
 Expressjs views used to render HTML pages
 
+@tocomplete
 
 Enjoy !
