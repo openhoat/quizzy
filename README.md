@@ -1,6 +1,6 @@
 ## Quizzy
 
-A simple quizzes API server and Single Page Application powered by [Nodejs](https://nodejs.org/en/), [Expressjs](http://expressjs.com/), [Vuejs](https://vuejs.org/) and [Redis](https://redis.io/).
+A simple quizzes API server and [Single Page Application](https://en.wikipedia.org/wiki/Single-page_application) powered by [Nodejs](https://nodejs.org/en/), [Expressjs](http://expressjs.com/), [Vuejs](https://vuejs.org/) and [Redis](https://redis.io/).
 
 ### Usage
 
@@ -44,15 +44,33 @@ This directory contains all the Single Page Application code powered by Vuejs.
 
 Vuejs used components
 
-- account.vue : displays the account status (logged in)
-- breadcrumb.vue : displays the breadcrumb links
-- loading : loading spinner
+- [account.vue](cli/components/account.vue) : displays the account status (logged in)
+- [breadcrumb.vue](cli/components/breadcrumb.vue) : displays the breadcrumb links
+- [loading.vue](cli/components/loading.vue) : loading spinner
+
+##### css
+
+- [style.css](cli/css/style.css) : styles applied to the single page app
 
 ##### views
 
 Vuejs views
 
-- home.vue : welcome view displayed for default routes and when not logged in
-- quiz.vue : main vue that shows quiz questions and post answers to API server
-- quiz-result.vue : shows the quiz result with score and evaluation if enabled in config 
+- [home.vue](cli/views/home.vue) : welcome view displayed for default routes and when not logged in
+- [quiz.vue](cli/views/quiz.vue) : main vue that shows quiz questions and post answers to API server
+- [quiz-result.vue](cli/views/quiz-result.vue) : shows the quiz result with score and evaluation if enabled in config 
 
+#### lib
+
+This directory contains all the server code powered by Nodejs.
+
+#### test
+
+Unit tests in the form of mocha specs
+
+#### views
+
+Expressjs views used to render HTML pages
+
+
+Enjoy !
