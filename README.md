@@ -13,13 +13,13 @@ A simple quizzes API server and [Single Page Application](https://en.wikipedia.o
 
 #### Install dependencies :
 
-```
+```shell
 $ npm install
 ```
 
 or
 
-```
+```shell
 $ yarn
 ```
 
@@ -27,7 +27,7 @@ $ yarn
 
 #### Build the cli bundle :
 
-```
+```shell
 $ npm run build
 ```
 
@@ -37,7 +37,7 @@ Note :
 
 #### Start the server :
 
-```
+```shell
 $ npm start
 ```
 
@@ -49,7 +49,7 @@ Note : if NODE_ENV is set to development, the server is started with nodemon and
 2. start() : starts the server
 3. stop() : closes the server
 
-```
+```js
 const Quizzy = require('quizzy')
 const quizzy = Quizzy(/*myCustomConfig*/)
 quizzy.start()
