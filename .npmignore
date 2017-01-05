@@ -1,6 +1,5 @@
-.idea
-.eslintrc.yml
-.gitignore
+.*
 *.log
+dist/
 test/
 tmp/

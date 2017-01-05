@@ -72,7 +72,7 @@
         const quiz = store.state.quiz
         const answers = helper.getQuizAnswers(quiz)
         this.questionIndex = null
-        return helper.postQuizSession(quiz.id, answers)
+        return helper.postQuizAnswers(quiz.id, answers)
             .then(session => {
               store.commit('addSession', session)
               helper.clearQuizAnswer(quiz.id)

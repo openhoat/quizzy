@@ -81,8 +81,8 @@ const quizzes = [
     }
   }
 ]
-const goodSession = {quizId: 'president', answers: [1, 4]}
-const badSession = {quizId: 'anotherpresident', answers: [2, 1]}
+const goodAnswers = {quizId: 'president', answers: [1, 4]}
+const badAnswers = {quizId: 'anotherpresident', answers: [2, 1]}
 const player = {
   provider: 'google',
   name: 'John Doe',
@@ -132,6 +132,8 @@ describe('quizzy routes', function() {
       )
 
       describe('api', () => {
+
+        let goodSession
 
         it('should return an error when getting a bad uri', () => requestAsync(
           {
@@ -289,10 +291,10 @@ describe('quizzy routes', function() {
             })
         })
 
-        it('should return an error when posting session without authorization', () => {
+        it('should return an error when posting answers without authorization', () => {
           const req = {
             method: 'post',
-            url: '/api/sessions',
+            url: '/api/answers',
             json: true,
           }
           return requestAsync(req)
@@ -302,10 +304,10 @@ describe('quizzy routes', function() {
             })
         })
 
-        it('should return an error when posting incomplete session', () => {
+        it('should return an error when posting incomplete answers', () => {
           const req = {
             method: 'post',
-            url: '/api/sessions',
+            url: '/api/answers',
             headers: {authorization: playerAuthorization},
             json: true,
           }
@@ -316,12 +318,12 @@ describe('quizzy routes', function() {
             })
         })
 
-        it('should post a good session', () => {
+        it('should post good answers', () => {
           const req = {
             method: 'post',
-            url: '/api/sessions',
+            url: '/api/answers',
             headers: {authorization: playerAuthorization},
-            body: goodSession,
+            body: goodAnswers,
             json: true,
           }
           return requestAsync(req)
@@ -340,12 +342,12 @@ describe('quizzy routes', function() {
             })
         })
 
-        it('should post a bad session', () => {
+        it('should post bad answers', () => {
           const req = {
             method: 'post',
-            url: `/api/sessions`,
+            url: `/api/answers`,
             headers: {authorization: playerAuthorization},
-            body: badSession,
+            body: badAnswers,
             json: true,
           }
           return requestAsync(req)
@@ -367,7 +369,7 @@ describe('quizzy routes', function() {
         it('should get the good session', () => {
           const req = {
             method: 'get',
-            url: `/api/sessions/${goodSession.quizId}`,
+            url: `/api/sessions/${goodAnswers.quizId}`,
             headers: {authorization: playerAuthorization},
             json: true,
           }
@@ -385,13 +387,14 @@ describe('quizzy routes', function() {
               expect(body.user).to.eql(player)
               expect(body).to.have.property('score', 100)
               expect(body).to.have.property('result', 'You are a god!')
+              goodSession = body
             })
         })
 
         it('should get the bad session', () => {
           const req = {
             method: 'get',
-            url: `/api/sessions/${badSession.quizId}`,
+            url: `/api/sessions/${badAnswers.quizId}`,
             headers: {authorization: playerAuthorization},
             json: true,
           }
@@ -483,7 +486,7 @@ describe('quizzy routes', function() {
         it('should get player good session as admin', () => {
           const req = {
             method: 'get',
-            url: `/api/sessions/${goodSession.quizId}`,
+            url: `/api/sessions/${goodAnswers.quizId}`,
             headers: {authorization: adminAuthorization},
             qs: {email: player.email},
             json: true,
@@ -505,10 +508,46 @@ describe('quizzy routes', function() {
             })
         })
 
+        it('should get the good session, delete it and recreate it as admin', () => requestAsync(
+          {
+            method: 'get',
+            url: `/api/sessions/${goodSession.quizId}`,
+            headers: {authorization: adminAuthorization},
+            qs: {email: player.email},
+            json: true,
+          })
+          .spread((res, body) => {
+            expect(res).to.have.property('statusCode', 200)
+            expect(body).to.eql(goodSession)
+            return requestAsync({
+              method: 'delete',
+              url: `/api/sessions/${goodSession.quizId}`,
+              headers: {authorization: adminAuthorization},
+              qs: {email: player.email},
+              json: true,
+            })
+          })
+          .spread((res, body) => {
+            expect(res).to.have.property('statusCode', 204)
+            expect(body).to.not.be.ok
+            return requestAsync({
+              method: 'post',
+              url: '/api/sessions',
+              headers: {authorization: adminAuthorization},
+              body: goodSession,
+              json: true,
+            })
+          })
+          .spread((res, body) => {
+            expect(res).to.have.property('statusCode', 201)
+            expect(body).to.eql(goodSession)
+          })
+        )
+
         it('should return an error when trying to delete good session without admin authorization', () => {
           const req = {
             method: 'delete',
-            url: `/api/sessions/${goodSession.quizId}`,
+            url: `/api/sessions/${goodAnswers.quizId}`,
             headers: {authorization: playerAuthorization},
             qs: {email: player.email},
             json: true,
@@ -523,7 +562,7 @@ describe('quizzy routes', function() {
         it('should delete good session', () => {
           const req = {
             method: 'delete',
-            url: `/api/sessions/${goodSession.quizId}`,
+            url: `/api/sessions/${goodAnswers.quizId}`,
             headers: {authorization: adminAuthorization},
             qs: {email: player.email},
             json: true,
@@ -538,7 +577,7 @@ describe('quizzy routes', function() {
         it('should not found good session', () => {
           const req = {
             method: 'get',
-            url: `/api/sessions/${goodSession.quizId}`,
+            url: `/api/sessions/${goodAnswers.quizId}`,
             headers: {authorization: playerAuthorization},
             json: true,
           }
@@ -552,7 +591,7 @@ describe('quizzy routes', function() {
         it('should delete bad session', () => {
           const req = {
             method: 'delete',
-            url: `/api/sessions/${badSession.quizId}`,
+            url: `/api/sessions/${badAnswers.quizId}`,
             headers: {authorization: adminAuthorization},
             qs: {email: player.email},
             json: true,
@@ -567,7 +606,7 @@ describe('quizzy routes', function() {
         it('should not found bad session', () => {
           const req = {
             method: 'get',
-            url: `/api/sessions/${badSession.quizId}`,
+            url: `/api/sessions/${badAnswers.quizId}`,
             headers: {authorization: playerAuthorization},
             json: true,
           }

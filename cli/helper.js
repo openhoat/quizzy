@@ -59,9 +59,9 @@ const helper = {
     const quizAnswers = helper.getQuizAnswers(quiz)
     return quizAnswers.length >= quiz.questions.length
   },
-  postQuizSession: (quizId, answers) => $.ajax(helper.withAuthorization({
+  postQuizAnswers: (quizId, answers) => $.ajax(helper.withAuthorization({
     type: 'post',
-    url: helper.getApiUrl('/sessions'),
+    url: helper.getApiUrl('/answers'),
     headers: {
       'Content-Type': 'application/json',
     },
