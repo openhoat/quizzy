@@ -32,7 +32,7 @@ $ npm run build
 ```
 
 Note :
-- The bundle file is created into dist/app directory
+- The bundle file is created into assets/app directory
 - if NODE_ENV is set to production, the bundle is uglyfied/minified without sourcemaps.
 
 #### Start the server :
@@ -42,6 +42,21 @@ $ npm start
 ```
 
 Note : if NODE_ENV is set to development, the server is started with nodemon and webpack middleware is used to hot reload the cli.
+
+### Use as a module
+
+1. Create a configured quizzy instance with Quizzy factory
+2. start() : starts the server
+3. stop() : closes the server
+
+```
+const Quizzy = require('quizzy')
+const quizzy = Quizzy(/*myCustomConfig*/)
+quizzy.start()
+  .then(() => {
+    console.log('ready!')
+  })
+```
 
 ### Features :
 
@@ -126,7 +141,7 @@ Util functions
 
 ##### quizzy.js
 
-Main module of the app. It exports an express app if required by another module else it runs the server.
+Main module of the app. It exports a server component with a factory, init, start and stop methods if required by another module else it runs the server.
 
 #### test
 

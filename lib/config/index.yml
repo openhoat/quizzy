@@ -1,23 +1,22 @@
-cli:
-  appContainerId: quizzy
-  onlyQuizIds: undefined
-  showCorrectMessage: false                 # if true, shows correct/not correct message for each answer
-  showResult: false                         # if true, shows results at the end of a quiz session
-server:
-  port: ${env.QUIZZY_SERVER_PORT || env.SERVER_PORT || 3000}
-  hostname: ${env.QUIZZY_SERVER_HOST || env.SERVER_HOST || '127.0.0.1'}
-  socket: ${env.QUIZZY_SERVER_SOCKET || env.SERVER_SOCKET}
-persistence:
-  type: ${env.NODE_ENV === 'test' && 'memory' || env.QUIZZY_STORE_TYPE || 'memory'}
-  redis:
-    cli:
-      host: ${env.QUIZZY_REDIS_HOST || env.REDIS_HOST || 'localhost'}
-      port: ${env.QUIZZY_REDIS_PORT || env.REDIS_PORT || 6379}
-      db: ${env.NODE_ENV === 'test' && 1 || 0}
-      auth_pass: ${env.QUIZZY_REDIS_PASSWORD || env.REDIS_PASSWORD || ''}
-      no_ready_check: true
-      prefix: 'quizzy:'
-auth:
+cli:                                                                                                                  # cli config
+  appContainerId: quizzy                                                                                              # DOM element ID used to mount the app cli
+  onlyQuizIds: undefined                                                                                              # Comma separated quiz IDs to show (default all)
+  showCorrectMessage: false                                                                                           # if true, shows correct/not correct message for each answer
+  showResult: false                                                                                                   # if true, shows results at the end of a quiz session
+server:                                                                                                               # Web server configuration
+  port: ${env.QUIZZY_SERVER_PORT || env.SERVER_PORT || 3000}                                                          # Port to bind
+  hostname: ${env.QUIZZY_SERVER_HOST || env.SERVER_HOST || '127.0.0.1'}                                               # Hostname to bind
+  socket: ${env.QUIZZY_SERVER_SOCKET || env.SERVER_SOCKET}                                                            # Unix socket to bind (if set port and hostname are ignored)
+persistence:                                                                                                          # Persistence configuration
+  type: ${env.NODE_ENV === 'test' && 'memory' || env.QUIZZY_STORE_TYPE || 'memory'}                                   # Persistence type (memory or redis)
+  redis:                                                                                                              # Redis client configuration (see https://github.com/NodeRedis/node_redis#rediscreateclient)
+    host: ${env.QUIZZY_REDIS_HOST || env.REDIS_HOST || 'localhost'}                                                   # Redis server host
+    port: ${env.QUIZZY_REDIS_PORT || env.REDIS_PORT || 6379}                                                          # Redis server port
+    db: ${env.NODE_ENV === 'test' && 1 || 0}                                                                          # Redis db index
+    auth_pass: ${env.QUIZZY_REDIS_PASSWORD || env.REDIS_PASSWORD || ''}                                               # Redis password
+    no_ready_check: true
+    prefix: 'quizzy:'                                                                                                 # Redis key prefix
+auth:                                                                                                                 # Authentication configuration
   google:
     clientId: ${env.QUIZZY_GOOGLE_CONSUMER_KEY || env.GOOGLE_CONSUMER_KEY || 'googleClientId'}
     clientSecret: ${env.QUIZZY_GOOGLE_CONSUMER_SECRET || env.GOOGLE_CONSUMER_SECRET || 'googleClientSecret'}
@@ -27,19 +26,19 @@ auth:
   twitter:
     consumerKey: ${env.QUIZZY_TWITTER_CONSUMER_KEY || env.TWITTER_CONSUMER_KEY || 'twitterConsumerKey'}
     consumerSecret: ${env.QUIZZY_TWITTER_CONSUMER_SECRET || env.TWITTER_CONSUMER_SECRET || 'twitterConsumerSecret'}
-admin: ${env.QUIZZY_ADMINS || 'admin@quizzy.io'}
+admin: ${env.QUIZZY_ADMINS || 'admin@quizzy.io'}                                                                      # Comma separated list of admin emails
 express:
   session:
-    secret: ${env.QUIZZY_EXPRESS_SESSION_SECRET || env.EXPRESS_SESSION_SECRET || 'lrC8BabSIx3PeGV-J45J9_m5'}
+    secret: ${env.QUIZZY_EXPRESS_SESSION_SECRET || env.EXPRESS_SESSION_SECRET || 'lrC8BabSIx3PeGV-J45J9_m5'}          # Express session secret
 jwt:
-  secret: ${env.QUIZZY_JWT_SECRET || env.JWT_SECRET || '7bJbNCGuRjV2R8vlGTrUwfRZ'}
-cookiesMaxAge: ${365 * 24 * 60 * 60 * 1000}
+  secret: ${env.QUIZZY_JWT_SECRET || env.JWT_SECRET || '7bJbNCGuRjV2R8vlGTrUwfRZ'}                                    # JSON Web Token secret
+cookiesMaxAge: ${365 * 24 * 60 * 60 * 1000}                                                                           # Cookies duration
 hooks:
-  quizSession:
+  quizSession:                                                                                                        # Web hook used when a session is posted
     url: ${env.NODE_ENV !== 'test' && (env.QUIZZY_ELASTICSEARCH_URL || env.ELASTICSEARCH_URL) || ''}
     username: ${env.QUIZZY_ELASTICSEARCH_USERNAME || env.ELASTICSEARCH_USERNAME}
     password: ${env.QUIZZY_ELASTICSEARCH_PASSWORD || env.ELASTICSEARCH_PASSWORD}
-  quizSessionEmailNotification:
+  quizSessionEmailNotification:                                                                                       # Email notification used when a session is posted
     from: ${env.QUIZZY_EMAIL_NOTIFICATION_FROM}
     to: ${env.NODE_ENV !== 'test' && env.QUIZZY_EMAIL_NOTIFICATION_TO || ''}
     transport:

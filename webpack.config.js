@@ -3,14 +3,17 @@ const webpack = require('webpack')
 const pkg = require('./package')
 
 const isProd = process.env.NODE_ENV === 'production'
-const bundleName = `${pkg.name}-bundle.js`
+const bundleName = `${pkg.name}-bundle${isProd ? '.min' : ''}.js`
 
 module.exports = ({
   entry: [path.resolve(__dirname, './cli/main.js')],
   output: {
-    path: path.resolve(__dirname, './dist/app'),
+    path: path.resolve(__dirname, './assets/app'),
     filename: bundleName,
     publicPath: '/assets/app/'
+  },
+  resolveLoader: {
+    root: [path.join(__dirname, 'node_modules')]
   },
   module: {
     loaders: [
