@@ -18,6 +18,7 @@ fr:
   evaluation: 'Evaluation'
   sorryNoMoreQuiz: "Désolé, aucun quiz n'est disponible, vous avez déjà participé"
   resultMessage: "Merci d'avoir effectué le quiz <strong>{quiz}</strong>, vous serez contacté prochainement."
+  elapsedTime: "Temps écoulé <strong>{duration}</strong> secondes..."
 en:
   home: 'Home'
   pleaseSignIn: 'Please sign in before to play with Quizzy'
@@ -38,3 +39,4 @@ en:
   evaluation: 'Evaluation'
   sorryNoMoreQuiz: 'Sorry, no more quiz available, you have already participated'
   resultMessage: 'Thank you for having done the <strong>{quiz}</strong> quiz, we will contact you soon.'
+  elapsedTime: "Elapsed time <strong>{duration}</strong> seconds..."

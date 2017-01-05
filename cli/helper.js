@@ -69,13 +69,13 @@ const helper = {
     data: JSON.stringify({quizId, answers}),
     crossDomain: true,
   })),
-  setQuizAnswer: (quizId, questionIndex, value) => {
+  setQuizAnswer: (quizId, questionIndex, value, duration) => {
     const answers = helper.getQuizAnswers()
     answers[quizId] = answers[quizId] || []
     if (questionIndex <= answers[quizId].length) {
-      answers[quizId][questionIndex - 1] = value
+      answers[quizId][questionIndex - 1] = {choice: value, duration}
     } else {
-      answers[quizId].push(value)
+      answers[quizId].push({choice: value, duration})
     }
     localStorage.setItem('answers', JSON.stringify(answers))
   },

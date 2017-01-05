@@ -8,7 +8,7 @@ properties:
       - number
       - boolean
   score:
-    type: number
+    type: integer
 required:
   - value
 additionalProperties: false

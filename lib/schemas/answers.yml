@@ -1,6 +1,24 @@
 id: /Answers
-title: 'Quiz session answers schema'
-type: array
-minItems: 1
-items:
-  $ref: ./Answer
+title: 'Quiz answers schema'
+type: object
+properties:
+  quizId:
+    type:
+      - string
+  answers:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      properties:
+        choice:
+          type: integer
+        duration:
+          $ref: ./Duration
+      required:
+        - choice
+      additionalProperties: false
+required:
+  - quizId
+  - answers
+additionalProperties: false

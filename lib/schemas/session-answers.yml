@@ -1,0 +1,6 @@
+id: /SessionAnswers
+title: 'Quiz session answers schema'
+type: array
+minItems: 1
+items:
+  $ref: ./SessionAnswer

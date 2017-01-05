@@ -81,8 +81,8 @@ const quizzes = [
     }
   }
 ]
-const goodAnswers = {quizId: 'president', answers: [1, 4]}
-const badAnswers = {quizId: 'anotherpresident', answers: [2, 1]}
+const goodAnswers = {quizId: 'president', answers: [{choice: 1}, {choice: 4}]}
+const badAnswers = {quizId: 'anotherpresident', answers: [{choice: 2}, {choice: 1}]}
 const player = {
   provider: 'google',
   name: 'John Doe',
@@ -313,8 +313,14 @@ describe('quizzy routes', function() {
           }
           return requestAsync(req)
             .spread((res, body) => {
-              expect(res).to.have.property('statusCode', 404)
-              expect(body).to.eql({code: 'Not Found', message: 'Not found'})
+              expect(res).to.have.property('statusCode', 400)
+              expect(body).to.eql({
+                code: 'Bad Request',
+                message: [
+                  'instance requires property "quizId"',
+                  'instance requires property "answers"',
+                ].join(',')
+              })
             })
         })
 
@@ -333,7 +339,7 @@ describe('quizzy routes', function() {
               expect(body).to.have.property('created')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/SessionAnswers').pattern))
               expect(body).to.have.property('quizId', quizzes[0].id)
               expect(body).to.have.property('user')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
@@ -357,7 +363,7 @@ describe('quizzy routes', function() {
               expect(body).to.have.property('created')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/SessionAnswers').pattern))
               expect(body).to.have.property('quizId', quizzes[1].id)
               expect(body).to.have.property('user')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
@@ -380,7 +386,7 @@ describe('quizzy routes', function() {
               expect(body).to.have.property('created')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/SessionAnswers').pattern))
               expect(body).to.have.property('quizId', quizzes[0].id)
               expect(body).to.have.property('user')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
@@ -405,7 +411,7 @@ describe('quizzy routes', function() {
               expect(body).to.have.property('created')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/SessionAnswers').pattern))
               expect(body).to.have.property('quizId', quizzes[1].id)
               expect(body).to.have.property('user')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
@@ -444,7 +450,7 @@ describe('quizzy routes', function() {
                 expect(session).to.have.property('created')
                   .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
                 expect(session).to.have.property('answers')
-                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/SessionAnswers').pattern))
                 expect(session).to.have.property('quizId')
                 expect(session).to.have.property('user')
                   .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
@@ -472,7 +478,7 @@ describe('quizzy routes', function() {
                 expect(session).to.have.property('created')
                   .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
                 expect(session).to.have.property('answers')
-                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/SessionAnswers').pattern))
                 expect(session).to.have.property('quizId')
                 expect(session).to.have.property('user')
                   .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
@@ -498,7 +504,7 @@ describe('quizzy routes', function() {
               expect(body).to.have.property('created')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/SessionAnswers').pattern))
               expect(body).to.have.property('quizId', quizzes[0].id)
               expect(body).to.have.property('user')
                 .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))

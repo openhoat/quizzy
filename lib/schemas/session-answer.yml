@@ -1,13 +1,15 @@
-id: /Answer
+id: /SessionAnswer
 title: 'Quiz session answer schema'
 type: object
 properties:
   question:
     $ref: ./Question
   choice:
-    type: number
+    type: integer
   score:
-    type: number
+    type: integer
+  duration:
+    $ref: ./Duration
 required:
   - question
   - choice

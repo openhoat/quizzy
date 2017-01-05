@@ -21,6 +21,7 @@
                     v-html="choice.value"
                     v-on:click="choose(index + 2)"></button>
           </div>
+          <p><em v-html="$t('elapsedTime', {duration})"></em></p>
         </div>
         <loading v-else></loading>
         <div v-if="typeof questionResult === 'boolean'" class="btn-group btn-group-justified">
@@ -46,6 +47,7 @@
   export default {
     data() {
       return {
+        duration: 0,
         questionIndex: null,
         questionResult: null,
         alert: null,
@@ -56,8 +58,12 @@
     },
     methods: {
       choose(index) {
+        if (this.timer) {
+          clearInterval(this.timer)
+          this.timer = null
+        }
         const quiz = store.state.quiz
-        helper.setQuizAnswer(quiz.id, this.questionIndex, index)
+        helper.setQuizAnswer(quiz.id, this.questionIndex, index, this.duration)
         if (!helper.getContainerData('showCorrectMessage')) {
           return this.next()
         }
@@ -97,6 +103,10 @@
         }
         const answers = helper.getQuizAnswers(quiz)
         this.questionIndex = answers.length + 1
+        this.duration = 0
+        this.timer = setInterval(() => {
+          this.duration++
+        }, 1000)
       }
     },
     created() {

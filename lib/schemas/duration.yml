@@ -1,0 +1,4 @@
+id: /Duration
+title: 'Quiz answer duration schema'
+type: integer
+minimum: 0

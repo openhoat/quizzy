@@ -11,11 +11,13 @@ properties:
   quizId:
     type: string
   answers:
-    $ref: ./Answers
+    $ref: ./SessionAnswers
   score:
     type: integer
   max:
     type: integer
+  duration:
+    $ref: ./Duration
   result:
     type: string
 required:
