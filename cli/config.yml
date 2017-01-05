@@ -1,4 +1,0 @@
-quizzyElt: '#quizzy'                      # DOM element ID used to mount the single page app
-dataQuizIdAttrName: data-quiz-id          # Optional HTML attribute name used to specify quiz ID(s) to filter
-showCorrectMessage: false                 # if true, shows correct/not correct message for each answer
-showResult: false                         # if true, shows results at the end of a quiz session

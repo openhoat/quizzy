@@ -1,10 +1,11 @@
 const chai = require('chai')
 const _ = require('lodash')
+const tmp = require('tmp')
+const request = require('request')
+const Promise = require('bluebird')
 //const logger = require('hw-logger')
 //const log = logger.log
 const helper = require('../lib/helper')
-const TestServer = require('./test-server')
-const Store = require('../lib/services/store/index')
 const expect = chai.expect
 const Quizzy = require('../lib/quizzy')
 
@@ -107,33 +108,32 @@ describe('quizzy routes', function() {
 
     describe(`${persistenceType} store`, () => {
 
-      let store
       let quizzy
-      let testServer
-      let request
+      let requestAsync
 
       before(() => Promise.resolve()
         .then(() => {
           _.set(config, 'persistence.type', persistenceType)
-          store = Store.create(persistenceType, config.get('persistence'))
+          const socket = tmp.tmpNameSync({prefix: 'test-', postfix: '.sock'})
+          _.set(config, 'server.socket', socket)
+          quizzy = Quizzy(config)
+          requestAsync = Promise.promisify(request.defaults({
+            baseUrl: `http://unix:/${socket}:/`
+          }), {multiArgs: true})
         })
-        .then(() => store.start())
         .then(() => {
-          quizzy = Quizzy(config, store)
-          testServer = TestServer(quizzy)
-          request = testServer.request
+          quizzy.init()
+          return quizzy.start()
         })
-        .then(() => testServer.start())
       )
 
-      after(() => testServer.stop()
-        .finally(() => store.deleteAll())
-        .finally(() => store.stop())
+      after(() => quizzy.store.deleteAll()
+        .finally(() => quizzy.stop())
       )
 
       describe('api', () => {
 
-        it('should return an error when getting a bad uri', () => request(
+        it('should return an error when getting a bad uri', () => requestAsync(
           {
             method: 'get',
             url: `/api/baduri`,
@@ -145,7 +145,7 @@ describe('quizzy routes', function() {
           })
         )
 
-        it('should return an error when posting incomplete quiz', () => request(
+        it('should return an error when posting incomplete quiz', () => requestAsync(
           {
             method: 'post',
             url: '/api/quizzes',
@@ -175,7 +175,7 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 403)
               expect(body).to.eql({code: 'Forbidden'})
@@ -190,11 +190,11 @@ describe('quizzy routes', function() {
             headers: {authorization: adminAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 201)
               expect(body).to.have.property('created')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(_.omit(body, 'created')).to.eql(quizzes[0])
             })
         })
@@ -207,11 +207,11 @@ describe('quizzy routes', function() {
             headers: {authorization: adminAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 201)
               expect(body).to.have.property('created')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(_.omit(body, 'created')).to.eql(quizzes[1])
             })
         })
@@ -222,7 +222,7 @@ describe('quizzy routes', function() {
             url: `/api/quizzes`,
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               const expected = [{
@@ -243,7 +243,7 @@ describe('quizzy routes', function() {
             })
         })
 
-        it('should return an error when getting a bad quiz id', () => request(
+        it('should return an error when getting a bad quiz id', () => requestAsync(
           {
             method: 'get',
             url: `/api/quizzes/badid`,
@@ -263,7 +263,7 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               expect(body).to.have.property('created')
@@ -277,7 +277,7 @@ describe('quizzy routes', function() {
             url: `/api/quizzes/${quizzes[0].id}`,
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               expect(body).to.have.property('created')
@@ -295,7 +295,7 @@ describe('quizzy routes', function() {
             url: '/api/sessions',
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 401)
               expect(body).to.eql({code: 'Unauthorized'})
@@ -309,7 +309,7 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 404)
               expect(body).to.eql({code: 'Not Found', message: 'Not found'})
@@ -324,17 +324,17 @@ describe('quizzy routes', function() {
             body: goodSession,
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 201)
               expect(body).to.have.property('id').that.is.a('string')
               expect(body).to.have.property('created')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
               expect(body).to.have.property('quizId', quizzes[0].id)
               expect(body).to.have.property('user')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/User').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
               expect(body).to.have.property('score', 100)
               expect(body).to.have.property('result', 'You are a god!')
             })
@@ -348,17 +348,17 @@ describe('quizzy routes', function() {
             body: badSession,
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 201)
               expect(body).to.have.property('id').that.is.a('string')
               expect(body).to.have.property('created')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
               expect(body).to.have.property('quizId', quizzes[1].id)
               expect(body).to.have.property('user')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/User').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
               expect(body).to.have.property('score', 0)
               expect(body).to.have.property('result', 'You are too bad')
             })
@@ -371,17 +371,17 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               expect(body).to.have.property('id')
               expect(body).to.have.property('created')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
               expect(body).to.have.property('quizId', quizzes[0].id)
               expect(body).to.have.property('user')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/User').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
               expect(body.user).to.eql(player)
               expect(body).to.have.property('score', 100)
               expect(body).to.have.property('result', 'You are a god!')
@@ -395,17 +395,17 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               expect(body).to.have.property('id')
               expect(body).to.have.property('created')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
               expect(body).to.have.property('quizId', quizzes[1].id)
               expect(body).to.have.property('user')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/User').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
               expect(body.user).to.eql(player)
               expect(body).to.have.property('score', 0)
               expect(body).to.have.property('result', 'You are too bad')
@@ -418,7 +418,7 @@ describe('quizzy routes', function() {
             url: '/api/sessions',
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 401)
               expect(body).to.eql({code: 'Unauthorized'})
@@ -432,19 +432,19 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               expect(body).to.be.an('array')
               body.forEach(session => {
                 expect(session).to.have.property('id').that.contains(player.email)
                 expect(session).to.have.property('created')
-                  .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
                 expect(session).to.have.property('answers')
-                  .that.matches(new RegExp(store.jsonValidator.v.getSchema('/Answers').pattern))
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
                 expect(session).to.have.property('quizId')
                 expect(session).to.have.property('user')
-                  .that.matches(new RegExp(store.jsonValidator.v.getSchema('/User').pattern))
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
                 expect(session.user).to.eql(player)
                 expect(session).to.have.property('score').that.is.a('number')
                 expect(session).to.have.property('result').that.is.a('string')
@@ -460,19 +460,19 @@ describe('quizzy routes', function() {
             headers: {authorization: adminAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               expect(body).to.be.an('array')
               body.forEach(session => {
                 expect(session).to.have.property('id').that.contains(player.email)
                 expect(session).to.have.property('created')
-                  .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
                 expect(session).to.have.property('answers')
-                  .that.matches(new RegExp(store.jsonValidator.v.getSchema('/Answers').pattern))
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
                 expect(session).to.have.property('quizId')
                 expect(session).to.have.property('user')
-                  .that.matches(new RegExp(store.jsonValidator.v.getSchema('/User').pattern))
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
                 expect(session.user).to.eql(player)
                 expect(session).to.have.property('score').that.is.a('number')
                 expect(session).to.have.property('result').that.is.a('string')
@@ -488,17 +488,17 @@ describe('quizzy routes', function() {
             qs: {email: player.email},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               expect(body).to.have.property('id')
               expect(body).to.have.property('created')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/DateTime').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
               expect(body).to.have.property('answers')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/Answers').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/Answers').pattern))
               expect(body).to.have.property('quizId', quizzes[0].id)
               expect(body).to.have.property('user')
-                .that.matches(new RegExp(store.jsonValidator.v.getSchema('/User').pattern))
+                .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
               expect(body.user).to.eql(player)
               expect(body).to.have.property('score', 100)
               expect(body).to.have.property('result', 'You are a god!')
@@ -513,7 +513,7 @@ describe('quizzy routes', function() {
             qs: {email: player.email},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 403)
               expect(body).to.eql({code: 'Forbidden'})
@@ -528,7 +528,7 @@ describe('quizzy routes', function() {
             qs: {email: player.email},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 204)
               expect(body).to.not.be.ok
@@ -542,7 +542,7 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 404)
               expect(body).to.eql({code: 'Not Found', message: 'Not found'})
@@ -557,7 +557,7 @@ describe('quizzy routes', function() {
             qs: {email: player.email},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 204)
               expect(body).to.not.be.ok
@@ -571,7 +571,7 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 404)
               expect(body).to.eql({code: 'Not Found', message: 'Not found'})
@@ -585,7 +585,7 @@ describe('quizzy routes', function() {
             headers: {authorization: playerAuthorization},
             json: true,
           }
-          return request(req)
+          return requestAsync(req)
             .spread((res, body) => {
               expect(res).to.have.property('statusCode', 200)
               expect(body).to.be.an('array').that.is.empty

@@ -1,3 +1,8 @@
+cli:
+  appContainerId: quizzy
+  onlyQuizIds: undefined
+  showCorrectMessage: false                 # if true, shows correct/not correct message for each answer
+  showResult: false                         # if true, shows results at the end of a quiz session
 server:
   port: ${env.QUIZZY_SERVER_PORT || env.SERVER_PORT || 3000}
   hostname: ${env.QUIZZY_SERVER_HOST || env.SERVER_HOST || '127.0.0.1'}
@@ -12,7 +17,6 @@ persistence:
       auth_pass: ${env.QUIZZY_REDIS_PASSWORD || env.REDIS_PASSWORD || ''}
       no_ready_check: true
       prefix: 'quizzy:'
-    rootKey: quizzy
 auth:
   google:
     clientId: ${env.QUIZZY_GOOGLE_CONSUMER_KEY || env.GOOGLE_CONSUMER_KEY || 'googleClientId'}

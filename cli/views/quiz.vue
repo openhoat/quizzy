@@ -43,7 +43,6 @@
   import hljs from 'highlightjs/highlight.pack'
   import helper from '../helper'
   import store from '../store'
-  import config from 'json!yaml!../config.yml'
   export default {
     data() {
       return {
@@ -59,7 +58,7 @@
       choose(index) {
         const quiz = store.state.quiz
         helper.setQuizAnswer(quiz.id, this.questionIndex, index)
-        if (!config.showCorrectMessage) {
+        if (!helper.getContainerData('showCorrectMessage')) {
           return this.next()
         }
         $('.quiz-choice').addClass('disabled')

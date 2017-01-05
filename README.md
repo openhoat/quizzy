@@ -114,7 +114,7 @@ Contains all the JSON schemas of entities, in YAML format.
 - errors.js : Custom error classes used in the project
 - json-validator.js : JSON schema validator used by the store to validate entities before persist them
 - redis-cli.js : A simple Redis client
-- view-renderer.js : HTML view renderer used by the express app
+- view-renderer.js : Custom HTML view renderer powered by lodash template
 
 ##### config.js
 

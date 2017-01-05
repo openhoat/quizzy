@@ -37,7 +37,6 @@ Vue.directive('focus', {
 
 // App deps
 import './css/style.css'
-import config from 'json!yaml!./config.yml'
 import locales from 'json!yaml!./locales.yml'
 import Breadcrumb from './components/breadcrumb.vue'
 import Account from './components/account.vue'
@@ -61,7 +60,7 @@ const template = `<div class="container-fluid">
 
 $(() => {
 
-  const quizzyElt = config.quizzyElt
+  const quizzyElt = '#quizzy'
   const router = (function buildRouter() {
     return new VueRouter({
       routes: [
@@ -85,7 +84,7 @@ $(() => {
     next()
   })
 
-  const quizId = $(quizzyElt).attr(config.dataQuizIdAttrName)
+  const quizId = helper.getContainerData('quizId')
   if (quizId) {
     store.commit('setQuizId', quizId)
   }

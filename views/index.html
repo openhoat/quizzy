@@ -13,7 +13,10 @@
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-<!--<div id="quizzy" data-quiz-id="agilite"></div>-->
-<div id="quizzy"></div>
+<div id="${config.cli.appContainerId}"
+     data-quiz-id="${config.cli.onlyQuizIds}"
+     data-show-correct-message="${config.cli.showCorrectMessage}"
+     data-show-result="${config.cli.showResult}">
+</div>
 </body>
 </html>

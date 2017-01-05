@@ -22,14 +22,14 @@
 
 <script type="text/ecmascript-6">
   import store from '../store'
-  import config from 'json!yaml!../config.yml'
+  import helper from '../helper'
   export default {
     data() {
       return {session: null}
     },
     computed: {
       quiz: () => store.state.quiz,
-      showResult: () => config.showResult,
+      showResult: () => helper.getContainerData('showResult'),
     },
     created() {
       if (!store.state.user || !store.state.sessions || !store.state.quiz) {

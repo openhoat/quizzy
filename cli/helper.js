@@ -41,6 +41,7 @@ const helper = {
     const host = urlParts[2]
     return protocol + '//' + host
   },
+  getContainerData: name => $('#quizzy').attr('data-' + _.kebabCase(name)),
   getQuizAnswers: quiz => {
     if (!quiz) {
       return JSON.parse(localStorage.getItem('answers') || '{}')
