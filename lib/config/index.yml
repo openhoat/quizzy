@@ -33,7 +33,7 @@ express:
 jwt:
   secret: ${env.QUIZZY_JWT_SECRET || env.JWT_SECRET || '7bJbNCGuRjV2R8vlGTrUwfRZ'}                                    # JSON Web Token secret
 cookiesMaxAge: ${365 * 24 * 60 * 60 * 1000}                                                                           # Cookies duration
-hooks:
+hooks:                                                                                                                # Session hooks
   quizSession:                                                                                                        # Web hook used when a session is posted
     url: ${env.NODE_ENV !== 'test' && (env.QUIZZY_ELASTICSEARCH_URL || env.ELASTICSEARCH_URL) || ''}
     username: ${env.QUIZZY_ELASTICSEARCH_USERNAME || env.ELASTICSEARCH_USERNAME}

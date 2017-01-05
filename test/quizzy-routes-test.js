@@ -421,6 +421,32 @@ describe('quizzy routes', function() {
             })
         })
 
+        it('should get all the sessions as admin', () => {
+          const req = {
+            method: 'get',
+            url: '/api/sessions',
+            headers: {authorization: adminAuthorization},
+            json: true,
+          }
+          return requestAsync(req)
+            .spread((res, body) => {
+              expect(res).to.have.property('statusCode', 200)
+              expect(body).to.be.an('array').of.length(2)
+              body.forEach(session => {
+                expect(session).to.have.property('id')
+                expect(session).to.have.property('created')
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/DateTime').pattern))
+                expect(session).to.have.property('answers')
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/SessionAnswers').pattern))
+                expect(session).to.have.property('quizId')
+                expect(session).to.have.property('user')
+                  .that.matches(new RegExp(quizzy.store.jsonValidator.v.getSchema('/User').pattern))
+                expect(session).to.have.property('score')
+                expect(session).to.have.property('result')
+              })
+            })
+        })
+
         it('should return an error when trying to find player sessions without authorization', () => {
           const req = {
             method: 'get',
