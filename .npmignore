@@ -1,5 +1,6 @@
 .*
 *.log
 dist/
+etc/
 test/
 tmp/

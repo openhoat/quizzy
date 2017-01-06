@@ -1,0 +1,123 @@
+{
+  "mappings": {
+    "sessions": {
+      "properties": {
+        "result": {
+          "type": "string",
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "score": {
+          "type": "long"
+        },
+        "max": {
+          "type": "long"
+        },
+        "quizId": {
+          "type": "string",
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "created": {
+          "type": "date"
+        },
+        "answers": {
+          "properties": {
+            "score": {
+              "type": "long"
+            },
+            "question": {
+              "properties": {
+                "choices": {
+                  "properties": {
+                    "score": {
+                      "type": "long"
+                    },
+                    "value": {
+                      "type": "string",
+                      "fields": {
+                        "raw": {
+                          "type": "string",
+                          "index": "not_analyzed"
+                        }
+                      }
+                    }
+                  }
+                },
+                "title": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                },
+                "info": {
+                  "type": "string",
+                  "fields": {
+                    "raw": {
+                      "type": "string",
+                      "index": "not_analyzed"
+                    }
+                  }
+                }
+              }
+            },
+            "choice": {
+              "type": "long"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "fields": {
+            "raw": {
+              "type": "string",
+              "index": "not_analyzed"
+            }
+          }
+        },
+        "user": {
+          "properties": {
+            "provider": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "name": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            },
+            "email": {
+              "type": "string",
+              "fields": {
+                "raw": {
+                  "type": "string",
+                  "index": "not_analyzed"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

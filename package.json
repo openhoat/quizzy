@@ -42,7 +42,6 @@
     "lodash": "^4.17.4",
     "lodash.template": "^4.4.0",
     "method-override": "^2.3.7",
-    "moment": "^2.17.1",
     "nodemailer": "^2.7.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
