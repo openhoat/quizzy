@@ -11,39 +11,21 @@ A simple quizzes API server and [Single Page Application](https://en.wikipedia.o
 
 #### [Install NodeJS](https://nodejs.org/en/download/package-manager/)
 
-#### Install dependencies :
+### Install
 
 ```shell
-$ npm install
+$ npm install quizzy
 ```
 
 or
 
 ```shell
-$ yarn
+$ yarn add quizzy
 ```
 
 ### Usage
 
-#### Build the cli bundle :
-
-```shell
-$ npm run build
-```
-
-Note :
-- The bundle file is created into assets/app directory
-- if NODE_ENV is set to production, the bundle is uglyfied/minified without sourcemaps.
-
-#### Start the server :
-
-```shell
-$ npm start
-```
-
-Note : if NODE_ENV is set to development, the server is started with nodemon and webpack middleware is used to hot reload the cli.
-
-### Use as a module
+Prerequisite : Populate the used redis db with some quizzes (alternative : use POST /quizzes API)
 
 1. Create a configured quizzy instance with Quizzy factory
 2. start() : starts the server
@@ -149,6 +131,42 @@ Unit tests in the form of mocha specs
 #### views
 
 Expressjs views used to render HTML pages
+
+### More information
+
+The best way to understand how quizzy works is to have a look at [unit tests](test/quizzy-routes-test.js)
+
+### Build the project
+
+#### Install dependencies :
+
+```shell
+$ npm install
+```
+
+or
+
+```shell
+$ yarn
+```
+
+#### Build the cli bundle :
+
+```shell
+$ npm run build
+```
+
+Note :
+- The bundle file is created into assets/app directory
+- if NODE_ENV is set to production, the bundle is uglyfied/minified without sourcemaps.
+
+#### Start the server :
+
+```shell
+$ npm start
+```
+
+Note : if NODE_ENV is set to development, the server is started with nodemon and webpack middleware is used to hot reload the cli.
 
 @tocomplete
 
