@@ -79,7 +79,6 @@ This directory contains all the Single Page Application code powered by Vuejs.
 
 The client part is based on VueJS with vue-i18n, vue-router, and vuex (it can also be used as a boilerplate project for VueJS)
 
-- [config.yml](cli/config.yml) : configuration settings of the single page app
 - [helper.js](cli/helper.js) : util functions
 - [locales.yml](cli/locales.yml) : localized texts ([vue-i18n](https://www.npmjs.com/package/vue-i18n))
 - [main.js](cli/main.js) : entry point of the single page app
