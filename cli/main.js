@@ -26,14 +26,6 @@ Vue.directive('focus', {
     el.focus()
   }
 })
-/*
- Vue.directive('highlightjs', {
- inserted: el => {
- $(el).find('pre > code').each(function() {
- hljs.highlightBlock(this)
- })
- }
- })*/
 
 // App deps
 import './css/style.css'
@@ -41,9 +33,7 @@ import locales from 'json!yaml!./locales.yml'
 import Breadcrumb from './components/breadcrumb.vue'
 import Account from './components/account.vue'
 import Loading from './components/loading.vue'
-import Home from './views/home.vue'
-import Quiz from './views/quiz.vue'
-import QuizResult from './views/quiz-result.vue'
+import routes from './routes.js'
 import helper from './helper'
 import store from './store'
 
@@ -62,14 +52,7 @@ $(() => {
 
   const quizzyElt = '#quizzy'
   const router = (function buildRouter() {
-    return new VueRouter({
-      routes: [
-        {path: '/', component: Home},
-        {path: '/quizzes/:id', component: Quiz},
-        {path: '/quizzes/:id/result', component: QuizResult},
-        {path: '*', redirect: {path: '/'}},
-      ]
-    })
+    return new VueRouter({routes})
   })()
   router.beforeEach((to, from, next) => {
     const initialPath = Cookies.get('initialPath')

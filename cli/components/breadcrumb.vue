@@ -12,24 +12,29 @@
 
 <script type="text/ecmascript-6">
   export default {
-    computed: {
-      breadcrumb() {
-        let breadcrumb = []
-        this.$router.beforeEach((to, from, next) => {
-          breadcrumb = _.compact(to.path.split('/'))
-              .map((item, index, routeItems) => ({
-                title: _.capitalize(item),
-                path: '/' + routeItems.slice(0, index + 1).join('/')
-              }))
-          next()
-        })
-        return breadcrumb
+    data() {
+      return {
+        breadcrumb: null,
       }
     },
     methods: {
       currentPage(path) {
         return _.first(this.$route.path.split('?')) === path
-      }
+      },
+      refreshBreadcrumb(to) {
+        this.breadcrumb = _.compact(to.path.split('/'))
+            .map((item, index, routeItems) => ({
+              title: _.capitalize(item),
+              path: '/' + routeItems.slice(0, index + 1).join('/')
+            }))
+      },
     },
+    created(){
+      this.$router.beforeEach((to, from, next) => {
+        this.refreshBreadcrumb(to)
+        next()
+      })
+      this.refreshBreadcrumb(this.$route)
+    }
   }
 </script>

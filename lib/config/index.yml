@@ -26,7 +26,7 @@ auth:                                                                           
   twitter:
     consumerKey: ${env.QUIZZY_TWITTER_CONSUMER_KEY || env.TWITTER_CONSUMER_KEY || 'twitterConsumerKey'}
     consumerSecret: ${env.QUIZZY_TWITTER_CONSUMER_SECRET || env.TWITTER_CONSUMER_SECRET || 'twitterConsumerSecret'}
-admin: ${env.QUIZZY_ADMINS || 'admin@quizzy.io'}                                                                      # Comma separated list of admin emails
+admin: ${env.NODE_ENV !== 'test' && env.QUIZZY_ADMINS || 'admin@quizzy.io'}                                                                      # Comma separated list of admin emails
 express:
   session:
     secret: ${env.QUIZZY_EXPRESS_SESSION_SECRET || env.EXPRESS_SESSION_SECRET || 'lrC8BabSIx3PeGV-J45J9_m5'}          # Express session secret

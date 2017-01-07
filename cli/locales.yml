@@ -11,6 +11,8 @@ fr:
   signInWith: 'Se connecter avec {provider}'
   gotoNextQuestion: 'passer à la question suivante'
   quiz: 'Quiz'
+  question: 'Question <strong>{index}</strong> / {size}'
+  makeYourChoice: 'Faîtes votre choix :'
   correct: 'Correct'
   notCorrect: 'Incorrect'
   yourQuizResult: 'Résultat de votre quiz'
@@ -19,6 +21,21 @@ fr:
   sorryNoMoreQuiz: "Désolé, aucun quiz n'est disponible, vous avez déjà participé"
   resultMessage: "Merci d'avoir effectué le quiz <strong>{quiz}</strong>, vous serez contacté prochainement."
   elapsedTime: "Temps écoulé <strong>{duration}</strong> secondes..."
+  seeSessions: "Voir les sessions"
+  sessionDetails: "Détails de la session <strong><em>#{id}</em></strong> :"
+  seeQuizSessions: "Voir les sessions du quiz {quiz}"
+  creationDateField: "Date de création :"
+  userField: "Utilisateur :"
+  emailField: "Email :"
+  usernameField: "Nom :"
+  userProviderField: "Fournisseur :"
+  quizField: "Quiz :"
+  scoreField: "Score :"
+  resultField: "Résultat :"
+  durationField: "Durée :"
+  secondsField: "s"
+  questionField: "Question #{index} :"
+  infoField: "Information supplémentaire :"
 en:
   home: 'Home'
   pleaseSignIn: 'Please sign in before to play with Quizzy'
@@ -32,6 +49,8 @@ en:
   signInWith: 'Sign in with {provider}'
   gotoNextQuestion: 'go to next question'
   quiz: 'Quiz'
+  question: 'Question'
+  makeYourChoice: 'Make your choice:'
   correct: 'Correct'
   notCorrect: 'Not correct'
   yourQuizResult: 'Your quiz result'
@@ -40,3 +59,18 @@ en:
   sorryNoMoreQuiz: 'Sorry, no more quiz available, you have already participated'
   resultMessage: 'Thank you for having done the <strong>{quiz}</strong> quiz, we will contact you soon.'
   elapsedTime: "Elapsed time <strong>{duration}</strong> seconds..."
+  seeSessions: "See sessions"
+  sessionDetails: "Session <strong><em>#{id}</em></strong> details:"
+  seeQuizSessions: "See {quiz} quiz sessions"
+  creationDateField: "Creation date:"
+  userField: "User:"
+  emailField: "Email:"
+  usernameField: "Name:"
+  userProviderField: "Provider:"
+  quizField: "Quiz:"
+  scoreField: "Score:"
+  resultField: "Result:"
+  durationField: "Duration:"
+  secondsField: "s"
+  questionField: "Question #{index}:"
+  infoField: "Extra information:"

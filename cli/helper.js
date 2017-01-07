@@ -24,15 +24,22 @@ const helper = {
     dataType: 'json',
     crossDomain: true,
   }),
-  fetchQuizSessions: () => $.ajax(helper.withAuthorization({
+  fetchQuizSessions: quizId => $.ajax(helper.withAuthorization({
     type: 'get',
-    url: helper.getApiUrl('/sessions'),
+    url: helper.getApiUrl('/sessions', quizId),
     dataType: 'json',
     crossDomain: true,
   })),
-  getApiUrl: url => {
+  fetchQuizSession: (quizId, email) => $.ajax(helper.withAuthorization({
+    type: 'get',
+    url: helper.getApiUrl('/sessions', quizId),
+    data: {email},
+    dataType: 'json',
+    crossDomain: true,
+  })),
+  getApiUrl: (...args) => {
     const baseUrl = helper.getBaseUrl()
-    url = url.split('/').filter(item => item).join('/')
+    const url = _.flatten(args.map(url => url && url.split('/').filter(item => item))).join('/')
     return `${baseUrl}/api/${url}`
   },
   getBaseUrl: () => {

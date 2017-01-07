@@ -6,8 +6,12 @@
              v-html="$t('loggedInWith', {email: user.email, provider: user.provider})">
         </div>
         <div class="col-xs-6 text-right">
-          <a role="button" v-on:click="signout" :title="$t('signOut')" class="pull-right btn btn-danger btn-sm">
-            {{ $t('signOut') }}
+          <a v-if="user.admin" :title="$t('seeSessions')" class="btn btn-info btn-sm"
+             href="#/admin/sessions">
+            <span class="glyphicon glyphicon-eye-open"></span>
+          </a>
+          <a v-on:click="signout" :title="$t('signOut')" class="pull-right btn btn-danger btn-sm" href="#">
+            <span class="glyphicon glyphicon-log-out"></span>
           </a>
         </div>
       </div>
@@ -27,7 +31,7 @@
       user: () => store.state.user,
     },
     methods: {
-      signout: function () {
+      signout: function() {
         helper.deleteCookies()
         store.commit('clearUser')
         this.$router && this.$router.push('/')
