@@ -11,7 +11,7 @@
           <dl class="list-group dl-horizontal">
             <a class="list-group-item" type="button" v-for="quiz in quizzes"
                :title="$t('playWithQuiz', {name: quiz.title})" :href="`#/quizzes/${quiz.id}`">
-              <dt>{{ quiz.title }}</dt>
+              <dt v-html="quiz.title"></dt>
               <dd v-html="quiz.description"></dd>
             </a>
           </dl>
