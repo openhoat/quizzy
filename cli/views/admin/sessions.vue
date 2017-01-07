@@ -44,6 +44,7 @@
       if (!store.state.user || !store.state.user.admin) {
         return this.$router.replace('/')
       }
+      store.commit('clearSessions')
       Promise.all([helper.fetchQuizzes(), helper.fetchQuizSessions()])
           .then(values => {
             const quizzes = values.shift()

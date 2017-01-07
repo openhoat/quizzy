@@ -39,6 +39,7 @@
       if (!store.state.user || !store.state.user.admin) {
         return this.$router.replace('/')
       }
+      store.commit('clearSessions')
       const quizId = this.$route.params.id
       helper.fetchQuizSessions()
           .then(sessions => sessions.filter(session => session.quizId === quizId))

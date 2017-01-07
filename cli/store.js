@@ -28,6 +28,9 @@ export default new Vuex.Store({
     setQuizzes(state, quizzes) {
       state.quizzes = quizzes
     },
+    clearSessions(state) {
+      state.sessions = null
+    },
     setSessions(state, sessions) {
       state.sessions = sessions
     },
