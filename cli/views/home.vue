@@ -64,7 +64,7 @@
               quizzes = quizzes.filter(quiz => quiz.id === store.state.quizId)
             }
             let sessions = values.shift()
-            sessions.filter(session => session.user.email === store.state.user.email)
+            sessions = sessions.filter(session => session.user.email === store.state.user.email)
             store.commit('setSessions', sessions)
             sessions.forEach(session => {
               quizzes = quizzes.filter(quiz => quiz.id !== session.quizId)
