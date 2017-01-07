@@ -1,6 +1,6 @@
 {
   "name": "quizzy",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Quizzes API server and SPA",
   "main": "lib/quizzy.js",
   "scripts": {
