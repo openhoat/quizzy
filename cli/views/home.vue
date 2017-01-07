@@ -48,7 +48,7 @@
   export default {
     computed: {
       user: () => store.state.user,
-      quizzes:() => store.state.quizzes,
+      quizzes: () => store.state.quizzes,
       googleSigninUrl: () => helper.getApiUrl('/auth/google'),
       facebookSigninUrl: () => helper.getApiUrl('/auth/facebook'),
       twitterSigninUrl: () => helper.getApiUrl('/auth/twitter'),
@@ -57,19 +57,19 @@
       if (!store.state.user) {
         return
       }
-      helper.fetchQuizSessions()
-          .then(sessions => {
+      Promise.all([helper.fetchQuizzes(), helper.fetchQuizSessions()])
+          .then(values => {
+            let quizzes = values.shift()
+            if (store.state.quizId) {
+              quizzes = quizzes.filter(quiz => quiz.id === store.state.quizId)
+            }
+            let sessions = values.shift()
+            sessions.filter(session => session.user.email === store.state.user.email)
             store.commit('setSessions', sessions)
-            return helper.fetchQuizzes()
-                .then(quizzes => {
-                  if (store.state.quizId) {
-                    quizzes = quizzes.filter(quiz => quiz.id === store.state.quizId)
-                  }
-                  sessions.forEach(session => {
-                    quizzes = quizzes.filter(quiz => quiz.id !== session.quizId)
-                  })
-                  store.commit('setQuizzes', quizzes)
-                })
+            sessions.forEach(session => {
+              quizzes = quizzes.filter(quiz => quiz.id !== session.quizId)
+            })
+            store.commit('setQuizzes', quizzes)
           })
     },
   }

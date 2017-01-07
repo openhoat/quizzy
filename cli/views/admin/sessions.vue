@@ -28,7 +28,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Promise from 'bluebird'
   import $ from 'jquery'
   import store from '../../store'
   import helper from '../../helper'
@@ -47,9 +46,9 @@
       }
       Promise.all([helper.fetchQuizzes(), helper.fetchQuizSessions()])
           .then(values => {
-            store.commit('setSessions', sessions)
             const quizzes = values.shift()
             const sessions = values.shift()
+            store.commit('setSessions', sessions)
             sessions.forEach(session => {
               const quizId = session.quizId
               const quiz = _.find(quizzes, {id: quizId})

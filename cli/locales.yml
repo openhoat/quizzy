@@ -36,6 +36,7 @@ fr:
   secondsField: "s"
   questionField: "Question #{index} :"
   infoField: "Information supplémentaire :"
+  noSession: "Aucune session…"
 en:
   home: 'Home'
   pleaseSignIn: 'Please sign in before to play with Quizzy'
@@ -74,3 +75,4 @@ en:
   secondsField: "s"
   questionField: "Question #{index}:"
   infoField: "Extra information:"
+  noSession: "No session…"

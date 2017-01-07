@@ -2,7 +2,7 @@
   <div>
     <account></account>
     <div v-if="sessions">
-      <table class="table table-hover">
+      <table class="table table-hover" v-if="sessions.length">
         <thead>
         <tr>
           <th>Email</th>
@@ -19,13 +19,15 @@
         </tr>
         </tbody>
       </table>
+      <p v-else>
+        {{ $t('noSession') }}
+      </p>
     </div>
     <loading v-else></loading>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import Promise from 'bluebird'
   import $ from 'jquery'
   import store from '../../store'
   import helper from '../../helper'
@@ -42,9 +44,9 @@
           .then(sessions => sessions.filter(session => session.quizId === quizId))
           .then(sessions => {
             store.commit('setSessions', Array.isArray(sessions) ? sessions : [sessions])
-          })
-          .catch(err => {
-            console.warn(err)
+          }, (jqXHR, textStatus, errorThrown) => {
+            console.warn(textStatus)
+            store.commit('setSessions', [])
           })
     },
   }

@@ -91,7 +91,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Promise from 'bluebird'
   import $ from 'jquery'
   import hljs from 'highlightjs/highlight.pack'
   import store from '../../store'
