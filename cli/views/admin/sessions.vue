@@ -1,8 +1,14 @@
 <template>
   <div>
     <account></account>
+    <h3>
+      {{ $t('sessionsPerQuiz') }}
+      <button :title="$t('refresh')" type="button" class="btn btn-primary" v-on:click="refresh()">
+        <span class="glyphicon glyphicon-refresh"></span>
+      </button>
+    </h3>
     <div v-if="quizzes">
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover" v-if="quizzes">
         <thead>
         <tr>
           <th>Sessions</th>
@@ -22,6 +28,7 @@
         </tr>
         </tbody>
       </table>
+      <p v-else>{{ $t('noItems') }}</p>
     </div>
     <loading v-else></loading>
   </div>
@@ -32,10 +39,28 @@
   import store from '../../store'
   import helper from '../../helper'
   export default {
-    computed: {
-      quizzes: () => store.state.quizzes,
+    data(){
+      return {
+        quizzes: null,
+        sessions: null,
+      }
     },
     methods: {
+      refresh() {
+        Promise.all([helper.fetchQuizzes(), helper.fetchQuizSessions()])
+            .then(values => {
+              const quizzes = values.shift()
+              const sessions = values.shift()
+              this.sessions = sessions
+              sessions.forEach(session => {
+                const quizId = session.quizId
+                const quiz = _.find(quizzes, {id: quizId})
+                quiz.sessions = quiz.sessions || []
+                quiz.sessions.push(session)
+              })
+              this.quizzes = quizzes
+            })
+      },
       select(quizId) {
         return this.$router.push(`/admin/sessions/${quizId}`)
       }
@@ -44,24 +69,7 @@
       if (!store.state.user || !store.state.user.admin) {
         return this.$router.replace('/')
       }
-      store.commit('clearSessions')
-      Promise.all([helper.fetchQuizzes(), helper.fetchQuizSessions()])
-          .then(values => {
-            const quizzes = values.shift()
-            const sessions = values.shift()
-            store.commit('setSessions', sessions)
-            sessions.forEach(session => {
-              const quizId = session.quizId
-              const quiz = _.find(quizzes, {id: quizId})
-              quiz.sessions = quiz.sessions || []
-              quiz.sessions.push(session)
-            })
-            store.commit('setQuizzes', quizzes)
-          })
+      this.refresh()
     },
-    updated() {
-      $('.admin.navbar-nav li.active').removeClass('active')
-      $('#admin-navitem-quizzes').addClass('active')
-    }
   }
 </script>

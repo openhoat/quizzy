@@ -1,78 +1,82 @@
 fr:
-  home: 'Accueil'
-  pleaseSignIn: 'Merci de vous identifier avant de pouvoir jouer avec Quizzy'
-  welcome: 'Bienvenue {username} !'
-  loading: 'Chargement en cours...'
-  selectQuiz: 'Choisissez un quiz pour démarrer :'
-  playWithQuiz: 'Jouer avec le quiz {name}'
-  loggedInWith: 'Vous êtes connecté avec <strong>{provider}</strong> en tant que <strong>{email}</strong>'
-  notLogged: "Vous n'êtes pas connecté"
-  signOut: 'Se déconnecter'
-  signInWith: 'Se connecter avec {provider}'
-  gotoNextQuestion: 'passer à la question suivante'
-  quiz: 'Quiz'
-  question: 'Question <strong>{index}</strong> / {size}'
-  makeYourChoice: 'Faîtes votre choix :'
   correct: 'Correct'
-  notCorrect: 'Incorrect'
-  yourQuizResult: 'Résultat de votre quiz'
-  score: 'Score'
-  evaluation: 'Evaluation'
-  sorryNoMoreQuiz: "Désolé, aucun quiz n'est disponible, vous avez déjà participé"
-  resultMessage: "Merci d'avoir effectué le quiz <strong>{quiz}</strong>, vous serez contacté prochainement."
-  elapsedTime: "Temps écoulé <strong>{duration}</strong> secondes..."
-  seeSessions: "Voir les sessions"
-  sessionDetails: "Détails de la session <strong><em>#{id}</em></strong> :"
-  seeQuizSessions: "Voir les sessions du quiz {quiz}"
   creationDateField: "Date de création :"
-  userField: "Utilisateur :"
+  durationField: "Durée :"
+  elapsedTime: "Temps écoulé <strong>{duration}</strong> secondes..."
   emailField: "Email :"
+  evaluation: 'Evaluation'
+  gotoNextQuestion: 'passer à la question suivante'
+  home: 'Accueil'
+  infoField: "Information supplémentaire :"
+  loading: 'Chargement en cours...'
+  loggedInWith: 'Vous êtes connecté avec <strong>{provider}</strong> en tant que <strong>{email}</strong>'
+  makeYourChoice: 'Faîtes votre choix :'
+  noItems: "Aucun élément…"
+  notCorrect: 'Incorrect'
+  notLogged: "Vous n'êtes pas connecté"
+  playWithQuiz: 'Jouer avec le quiz {name}'
+  pleaseSignIn: 'Merci de vous identifier avant de pouvoir jouer avec Quizzy'
+  question: 'Question <strong>{index}</strong> / {size}'
+  questionField: "Question #{index} :"
+  quiz: 'Quiz'
+  quizField: "Quiz :"
+  refresh: 'Actualiser'
+  resultField: "Résultat :"
+  resultMessage: "Merci d'avoir effectué le quiz <strong>{quiz}</strong>, vous serez contacté prochainement."
+  score: 'Score'
+  scoreField: "Score :"
+  secondsField: "s"
+  seeQuizSessions: "Voir les sessions du quiz {quiz}"
+  seeSessions: "Voir les sessions"
+  selectQuiz: 'Choisissez un quiz pour démarrer :'
+  sessionDetails: "Détails de la session <strong><em>#{id}</em></strong> :"
+  sessionsOfQuiz: "Sessions du quiz {quiz} :"
+  sessionsPerQuiz: "Sessions par quiz :"
+  signInWith: 'Se connecter avec {provider}'
+  signOut: 'Se déconnecter'
+  userField: "Utilisateur :"
   usernameField: "Nom :"
   userProviderField: "Fournisseur :"
-  quizField: "Quiz :"
-  scoreField: "Score :"
-  resultField: "Résultat :"
-  durationField: "Durée :"
-  secondsField: "s"
-  questionField: "Question #{index} :"
-  infoField: "Information supplémentaire :"
-  noSession: "Aucune session…"
+  welcome: 'Bienvenue {username} !'
+  yourQuizResult: 'Résultat de votre quiz'
 en:
-  home: 'Home'
-  pleaseSignIn: 'Please sign in before to play with Quizzy'
-  welcome: 'Welcome {username}!'
-  loading: 'Loading...'
-  selectQuiz: 'Select a quiz to start:'
-  playWithQuiz: 'Play with {name} quiz'
-  loggedInWith: 'You are logged in as "{email}" via "{provider}"'
-  notLogged: 'You are not logged'
-  signOut: 'Sign out'
-  signInWith: 'Sign in with {provider}'
-  gotoNextQuestion: 'go to next question'
-  quiz: 'Quiz'
-  question: 'Question'
-  makeYourChoice: 'Make your choice:'
   correct: 'Correct'
-  notCorrect: 'Not correct'
-  yourQuizResult: 'Your quiz result'
-  score: 'Score'
-  evaluation: 'Evaluation'
-  sorryNoMoreQuiz: 'Sorry, no more quiz available, you have already participated'
-  resultMessage: 'Thank you for having done the <strong>{quiz}</strong> quiz, we will contact you soon.'
-  elapsedTime: "Elapsed time <strong>{duration}</strong> seconds..."
-  seeSessions: "See sessions"
-  sessionDetails: "Session <strong><em>#{id}</em></strong> details:"
-  seeQuizSessions: "See {quiz} quiz sessions"
   creationDateField: "Creation date:"
-  userField: "User:"
+  durationField: "Duration:"
+  elapsedTime: "Elapsed time <strong>{duration}</strong> seconds..."
   emailField: "Email:"
+  evaluation: 'Evaluation'
+  gotoNextQuestion: 'go to next question'
+  home: 'Home'
+  infoField: "Extra information:"
+  loading: 'Loading...'
+  loggedInWith: 'You are logged in as "{email}" via "{provider}"'
+  makeYourChoice: 'Make your choice:'
+  noItems: "No items…"
+  notCorrect: 'Not correct'
+  notLogged: 'You are not logged'
+  playWithQuiz: 'Play with {name} quiz'
+  pleaseSignIn: 'Please sign in before to play with Quizzy'
+  question: 'Question'
+  questionField: "Question #{index}:"
+  quiz: 'Quiz'
+  quizField: "Quiz:"
+  refresh: 'Refresh'
+  resultField: "Result:"
+  resultMessage: 'Thank you for having done the <strong>{quiz}</strong> quiz, we will contact you soon.'
+  score: 'Score'
+  scoreField: "Score:"
+  secondsField: "s"
+  seeQuizSessions: "See {quiz} quiz sessions"
+  seeSessions: "See sessions"
+  selectQuiz: 'Select a quiz to start:'
+  sessionDetails: "Session <strong><em>#{id}</em></strong> details:"
+  sessionsOfQuiz: "{quiz} quiz sessions:"
+  sessionsPerQuiz: "Sessions per quiz:"
+  signInWith: 'Sign in with {provider}'
+  signOut: 'Sign out'
+  userField: "User:"
   usernameField: "Name:"
   userProviderField: "Provider:"
-  quizField: "Quiz:"
-  scoreField: "Score:"
-  resultField: "Result:"
-  durationField: "Duration:"
-  secondsField: "s"
-  questionField: "Question #{index}:"
-  infoField: "Extra information:"
-  noSession: "No session…"
+  welcome: 'Welcome {username}!'
+  yourQuizResult: 'Your quiz result'

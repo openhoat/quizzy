@@ -16,9 +16,7 @@
             </a>
           </dl>
         </div>
-        <div v-else>
-          {{ $t('sorryNoMoreQuiz') }}
-        </div>
+        <p v-else>{{ $t('noItems') }}</p>
       </div>
       <loading v-else></loading>
     </div>
