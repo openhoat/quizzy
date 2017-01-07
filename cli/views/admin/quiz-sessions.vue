@@ -12,7 +12,8 @@
         </thead>
         <tbody>
         <tr v-for="(session, index) in sessions">
-          <td><a title="See details" :href="`#/admin/sessions/${session.quizId}/${session.user.email}`">{{ session.user.email }}</a></td>
+          <td><a title="See details" :href="`#/admin/sessions/${session.quizId}/${session.user.email}`">{{
+            session.user.email }}</a></td>
           <td>{{ session.score }}/{{ session.max }}</td>
           <td v-html="session.result"></td>
         </tr>
@@ -37,9 +38,13 @@
         return this.$router.replace('/')
       }
       const quizId = this.$route.params.id
-      helper.fetchQuizSessions(quizId)
+      helper.fetchQuizSessions()
+          .then(sessions => sessions.filter(session => session.quizId === quizId))
           .then(sessions => {
             store.commit('setSessions', Array.isArray(sessions) ? sessions : [sessions])
+          })
+          .catch(err => {
+            console.warn(err)
           })
     },
   }

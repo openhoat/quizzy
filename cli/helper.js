@@ -24,9 +24,9 @@ const helper = {
     dataType: 'json',
     crossDomain: true,
   }),
-  fetchQuizSessions: quizId => $.ajax(helper.withAuthorization({
+  fetchQuizSessions: () => $.ajax(helper.withAuthorization({
     type: 'get',
-    url: helper.getApiUrl('/sessions', quizId),
+    url: helper.getApiUrl('/sessions'),
     dataType: 'json',
     crossDomain: true,
   })),
