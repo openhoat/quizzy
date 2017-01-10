@@ -4,7 +4,7 @@
   "description": "Quizzes API server and SPA",
   "main": "lib/quizzy.js",
   "scripts": {
-    "clean": "rimraf dist/* **/.bundle*.js",
+    "clean": "rimraf dist/* assets/app/*",
     "lint": "eslint .",
     "test": "mocha",
     "cover": "istanbul cover _mocha",
