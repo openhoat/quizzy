@@ -10,7 +10,9 @@
     "cover": "istanbul cover _mocha",
     "coveralls": "npm run cover -- -- -R spec && cat dist/coverage/lcov.info | coveralls && rimraf dist/coverage",
     "build": "webpack && NODE_ENV=production webpack",
-    "start": "[ ${NODE_ENV} = 'development' ] && nodemon -e js,html lib/quizzy.js || node lib/quizzy.js"
+    "start": "[ ${NODE_ENV} = 'development' ] && nodemon -e js,html lib/quizzy.js || node lib/quizzy.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "Olivier Penhoat <openhoat@gmail.com> (http://headwood.net/)",
   "license": "MIT",
@@ -55,7 +57,8 @@
     "vue-i18n": "^4.10.0",
     "vue-router": "^2.1.1",
     "vue-spinner": "^1.0.2",
-    "vuex": "^2.1.1"
+    "vuex": "^2.1.1",
+    "snyk": "^1.88.1"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -93,5 +96,6 @@
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.14.0",
     "yaml-loader": "^0.4.0"
-  }
+  },
+  "snyk": true
 }
